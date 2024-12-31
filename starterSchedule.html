@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bread Starter Feed Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    input {
+      margin: 5px 0;
+      padding: 8px;
+      width: 100px;
+    }
+    button {
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bread Starter Feed Calculator</h1>
+  <p>Enter the target quantity and number of feeds to calculate your feed schedule.</p>
+  <form id="feedForm">
+    <label for="targetQuantity">Target Quantity (g):</label>
+    <input type="number" id="targetQuantity" required><br>
+    <label for="numberOfFeeds">Number of Feeds:</label>
+    <input type="number" id="numberOfFeeds" required><br>
+    <button type="button" onclick="generateFeedSchedule()">Calculate</button>
+  </form>
+
+  <table id="feedScheduleTable">
+    <thead>
+      <tr>
+        <th>Feed</th>
+        <th>Starter (g)</th>
+        <th>Flour (g)</th>
+        <th>Water (g)</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <script>
+    function calculateFeedSchedule(targetQuantity, numberOfFeeds) {
+        const feedSchedule = [];
+        let currentStarter = targetQuantity;
+
+        // Work backwards from the target quantity to calculate each feed
+        for (let i = numberOfFeeds; i > 0; i--) {
+            const flour = currentStarter / 2; // Flour is half the current starter
+            const water = flour;            // Water is equal to flour
+            const starter = currentStarter - (flour + water); // Remaining is the starter
+
+            feedSchedule.unshift({
+                feed: i,
+                starter: starter,
+                flour: flour,
+                water: water,
+            });
+
+            // For the next step, the starter becomes the current starter
+            currentStarter = starter;
+        }
+
+        return feedSchedule;
+    }
+
+    function generateFeedSchedule() {
+        const targetQuantity = parseFloat(document.getElementById("targetQuantity").value);
+        const numberOfFeeds = parseInt(document.getElementById("numberOfFeeds").value);
+
+        if (isNaN(targetQuantity) || isNaN(numberOfFeeds) || targetQuantity <= 0 || numberOfFeeds <= 0) {
+            alert("Please enter valid positive numbers for both fields.");
+            return;
+        }
+
+        const feedSchedule = calculateFeedSchedule(targetQuantity, numberOfFeeds);
+        const tableBody = document.getElementById("feedScheduleTable").querySelector("tbody");
+
+        // Clear any existing rows
+        tableBody.innerHTML = "";
+
+        // Populate the table with the feed schedule
+        feedSchedule.forEach(feed => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${feed.feed}</td>
+                <td>${feed.starter.toFixed(1)}</td>
+                <td>${feed.flour.toFixed(1)}</td>
+                <td>${feed.water.toFixed(1)}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+  </script>
+</body>
+</html>
