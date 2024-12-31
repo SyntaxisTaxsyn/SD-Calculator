@@ -43,6 +43,8 @@
     <input type="number" id="targetQuantity" required><br>
     <label for="numberOfFeeds">Number of Feeds:</label>
     <input type="number" id="numberOfFeeds" required><br>
+    <label for="hoursPerFeed">Hours Between Feeds:</label>
+    <input type="number" id="hoursPerFeed" required><br>
     <button type="button" onclick="generateFeedSchedule()">Calculate</button>
   </form>
 
@@ -53,6 +55,8 @@
         <th>Starter (g)</th>
         <th>Flour (g)</th>
         <th>Water (g)</th>
+        <th>Total (g)</th>
+        <th>Time</th>
       </tr>
     </thead>
     <tbody>
@@ -60,44 +64,54 @@
   </table>
 
   <script>
-    function calculateFeedSchedule(targetQuantity, numberOfFeeds) {
+    function calculateFeedSchedule(targetQuantity, numberOfFeeds, hoursPerFeed) {
         const feedSchedule = [];
-        let currentStarter = targetQuantity;
+        let currentStarter = targetQuantity / 2;
+        let totalTime = 0;
 
         // Work backwards from the target quantity to calculate each feed
         for (let i = numberOfFeeds; i > 0; i--) {
             const flour = currentStarter / 2; // Flour is half the current starter
             const water = flour;            // Water is equal to flour
-            const starter = currentStarter - (flour + water); // Remaining is the starter
+            const starter = currentStarter
+            const total = starter + flour + water;
 
             feedSchedule.unshift({
                 feed: i,
                 starter: starter,
                 flour: flour,
                 water: water,
+                total: total,
+                time: totalTime,
             });
 
             // For the next step, the starter becomes the current starter
-            currentStarter = starter;
+            currentStarter = starter / 2;
+            totalTime += hoursPerFeed;
         }
 
         return feedSchedule;
     }
 
     function generateFeedSchedule() {
+
         const targetQuantity = parseFloat(document.getElementById("targetQuantity").value);
         const numberOfFeeds = parseInt(document.getElementById("numberOfFeeds").value);
+        const hoursPerFeed = parseInt(document.getElementById("hoursPerFeed").value);
 
-        if (isNaN(targetQuantity) || isNaN(numberOfFeeds) || targetQuantity <= 0 || numberOfFeeds <= 0) {
-            alert("Please enter valid positive numbers for both fields.");
+        if (isNaN(targetQuantity) || isNaN(numberOfFeeds) || isNaN(hoursPerFeed) || targetQuantity <= 0 || numberOfFeeds <= 0 || hoursPerFeed <= 0){
+            alert("Please enter valid positive numbers for all fields.");
             return;
         }
-
-        const feedSchedule = calculateFeedSchedule(targetQuantity, numberOfFeeds);
+        
+        const timeSchedule = calculateSchedule(hoursPerFeed,numberOfFeeds);
+        const feedSchedule = calculateFeedSchedule(targetQuantity, numberOfFeeds, hoursPerFeed);
         const tableBody = document.getElementById("feedScheduleTable").querySelector("tbody");
+        const TotalTime = hoursPerFeed * numberOfFeeds;
 
         // Clear any existing rows
         tableBody.innerHTML = "";
+        let indexCount = 0;
 
         // Populate the table with the feed schedule
         feedSchedule.forEach(feed => {
@@ -107,10 +121,31 @@
                 <td>${feed.starter.toFixed(1)}</td>
                 <td>${feed.flour.toFixed(1)}</td>
                 <td>${feed.water.toFixed(1)}</td>
+                <td>${feed.total.toFixed(1)}</td>
+                <td>${timeSchedule[indexCount].toString()}</td>
             `;
             tableBody.appendChild(row);
+            indexCount += 1;
         });
     }
+
+    function calculateSchedule(intervalInHours, numberOfTasks) {
+    // Get the current time (starting point)
+    const now = new Date();
+
+    // Create an array to hold the future timestamps
+    const schedule = [];
+    schedule.push(now.toLocaleString()) // Start by feeding in the time we started at assuming its now
+
+    // Calculate the timestamp for each task
+    for (let i = 1; i <= numberOfTasks; i++) {
+        // Add the interval to the current time for each task
+        const taskTime = new Date(now.getTime() + (intervalInHours * i * 60 * 60 * 1000)); // Convert hours to milliseconds
+        schedule.push(taskTime.toLocaleString()); // Add the formatted date string to the schedule
+    }
+
+    return schedule;
+}
   </script>
 </body>
 </html>
