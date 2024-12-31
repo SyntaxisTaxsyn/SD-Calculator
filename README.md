@@ -6,3 +6,7 @@ over the last while.
 This page will be updated when the project is more complete
 
 This is just a placeholder for the moment
+
+You can find the online project here
+
+<https://syntaxistaxsyn.github.io/SD-Calculator/>
