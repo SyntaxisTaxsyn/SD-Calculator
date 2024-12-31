@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub page PWA template</title>
+  <link rel="canonical" href="https://syntaxistaxsyn.github.io/github-page-pwa/" />
+  <link rel="manifest" href="/github-page-pwa/manifest.webmanifest">
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+ 
+   <div class="content">
+        <!-- Content for each page, only one will be visible at a time -->
+        <div id="home" class="page active">
+            <h1>Calculate by Percentage</h1>
+            <br/>
+            <p>Calculate dough by percentage</p>
+        </div>
+        <div id="search" class="page">
+            <h1>Calculate by Weight</h1>
+            <br/>
+            <p>Calculate dough by Weight</p>
+        </div>
+        <div id="notifications" class="page">
+            <h1>Calculate by Yield</h1>
+            <br/>
+            <p>Calculate dough by yield</p>
+        </div>
+        <div id="profile" class="page">
+            <h1>Recipe Save/Load</h1>
+            <br/>
+            <p>Save/load your recipes here</p>
+        </div>
+        <div id="info" class="page">
+            <h1>Starter Feed Schedule</h1>
+            <br/>
+            <p>Calculate your starter feed schedule here.</p>
+        </div>
+    </div>
+
+    <!-- App bar with icons -->
+    <div class="app-bar">
+        <a href="javascript:void(0);" onclick="changeContent('home')"><i class="fa-solid fa-percent"></i></a>
+        <a href="javascript:void(0);" onclick="changeContent('search')"><i class="fa-solid fa-weight-scale"></i></a>
+        <a href="javascript:void(0);" onclick="changeContent('notifications')"><i class="fa-solid fa-list-check"></i></a>
+        <a href="javascript:void(0);" onclick="changeContent('profile')"><i class="fa-solid fa-arrow-right-arrow-left"></i></a>
+        <a href="javascript:void(0);" onclick="changeContent('info')"><i class="fa-regular fa-clock"></i></a
+    </div>
+
+
+  <script>
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.register (
+          '/github-page-pwa/sw.js',
+          {scope: '/github-page-pwa/'}
+        )
+      }
+  </script>
+  <script src="js/app.js"></script>
+  <script>
+   // Function to switch content based on the selected page
+        function changeContent(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Show the selected page
+            const activePage = document.getElementById(pageId);
+            activePage.classList.add('active');
+        }
+  </script>
+</body>
+</html>
