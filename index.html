@@ -8,32 +8,43 @@
   <link rel="manifest" href="/SD-Calculator/manifest.webmanifest">
   <link rel="stylesheet" href="css/styles.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    input {
+      margin: 5px 0;
+      padding: 8px;
+      width: 100px;
+    }
+    button {
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
  
    <div class="content">
         <!-- Content for each page, only one will be visible at a time -->
-        <div id="home" class="page active">
+        <div id="percent" class="page active">
             <h1>Calculate by Percentage</h1>
             <br/>
             <p>Calculate dough by percentage</p>
         </div>
-        <div id="search" class="page">
+        <div id="weight" class="page">
             <h1>Calculate by Weight</h1>
             <br/>
             <p>Calculate dough by Weight</p>
         </div>
-        <div id="notifications" class="page">
+        <div id="yield" class="page">
             <h1>Calculate by Yield</h1>
             <br/>
             <p>Calculate dough by yield</p>
         </div>
-        <div id="profile" class="page">
+        <div id="recipe" class="page">
             <h1>Recipe Save/Load</h1>
             <br/>
             <p>Save/load your recipes here</p>
         </div>
-        <div id="info" class="page">
+        <div id="schedule" class="page">
             <h1>Starter Feed Schedule</h1>
             <br/>
             <p>Calculate your starter feed schedule here.</p>
@@ -42,11 +53,11 @@
 
     <!-- App bar with icons -->
     <div class="app-bar">
-        <a href="javascript:void(0);" onclick="changeContent('home')"><i class="fa-solid fa-percent"></i></a>
-        <a href="javascript:void(0);" onclick="changeContent('search')"><i class="fa-solid fa-weight-scale"></i></a>
-        <a href="javascript:void(0);" onclick="changeContent('notifications')"><i class="fa-solid fa-list-check"></i></a>
-        <a href="javascript:void(0);" onclick="changeContent('profile')"><i class="fa-solid fa-arrow-right-arrow-left"></i></a>
-        <a href="javascript:void(0);" onclick="changeContent('info')"><i class="fa-regular fa-clock"></i></a
+        <a href="javascript:void(0);" onclick="changeContent('percent')"><i class="fa-solid fa-percent"></i></a>
+        <a href="javascript:void(0);" onclick="changeContent('weight')"><i class="fa-solid fa-weight-scale"></i></a>
+        <a href="javascript:void(0);" onclick="changeContent('yield')"><i class="fa-solid fa-list-check"></i></a>
+        <a href="javascript:void(0);" onclick="changeContent('recipe')"><i class="fa-solid fa-arrow-right-arrow-left"></i></a>
+        <a href="javascript:void(0);" onclick="changeContent('schedule')"><i class="fa-regular fa-clock"></i></a>
     </div>
 
 
@@ -70,6 +81,59 @@
             const activePage = document.getElementById(pageId);
             activePage.classList.add('active');
         }
+
+        async function loadHtmlWithInlineStyles(fileName,targetDiv) {
+      //const filename = document.getElementById("filename").value;
+      const filename = fileName;
+
+      if (!filename) {
+        alert("Please enter a file name.");
+        return;
+      }
+
+      try {
+        const response = await fetch(filename);
+        if (!response.ok) {
+          throw new Error(`Error loading file: ${response.statusText}`);
+        }
+
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        // Extract and apply inline <style> tags from the <head>
+        const styles = doc.querySelectorAll("style");
+        styles.forEach(style => {
+          const newStyle = document.createElement("style");
+          newStyle.textContent = style.textContent;
+          document.head.appendChild(newStyle);
+        });
+
+        const scripts = doc.querySelectorAll("script");
+        scripts.forEach(script => {
+            const newScript = document.createElement("script");
+            if(script.src)
+            {
+                newScript.src = script.src;
+            } else {
+                newScript.textContent = script.textContent;
+            }
+            document.body.appendChild(newScript);
+        });
+
+        // Insert the body content into the target div
+        //const contentDiv = document.getElementById("content");
+        const contentDiv = document.getElementById(targetDiv);
+        contentDiv.innerHTML = doc.body.innerHTML;
+
+      } catch (error) {
+        //document.getElementById("content").innerHTML = `<p style="color: red;">${error.message}</p>`;
+        document.getElementById(targetDiv).innerHTML = `<p style="color: red;">${error.message}</p>`;
+      }
+    }
+
+    loadHtmlWithInlineStyles("starterSchedule.html","schedule");
+  
   </script>
 </body>
 </html>
