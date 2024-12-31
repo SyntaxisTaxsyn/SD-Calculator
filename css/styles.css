@@ -14,7 +14,7 @@ body {
             height: 100%;
             margin: 0;
             font-family: Arial, sans-serif;
-            background-image: url('img/IMG_0884.jpeg'); /* Add your image URL here */
+            /*background-image: url('img/IMG_0884.jpeg'); /* Add your image URL here */
             background-size: cover;   /* Make the background cover the entire page */
             background-position: center;  /* Center the background image */
             background-repeat: no-repeat; /* Prevent the image from repeating */

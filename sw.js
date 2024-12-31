@@ -1,6 +1,6 @@
-var GHPATH = '/github-page-pwa';
+var GHPATH = '/SD-Calculator';
 var APP_PREFIX = 'SD Calculator_';
-var VERSION = 'version_009';
+var VERSION = 'version_001';
 var URLS = [    
   `${GHPATH}/`,
   `${GHPATH}/index.html`,

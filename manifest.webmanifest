@@ -2,14 +2,14 @@
   "name": "Sourdough Calculator",
   "short_name": "SD Calculator",
   "description": "Sourdough Calculator PWA application",
-  "scope": "/github-page-pwa/",
-  "start_url": "/github-page-pwa/",
+  "scope": "/SD-Calculator/",
+  "start_url": "/SD-Calculator/",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "display": "standalone", 
   "icons": [
       {
-        "src": "/github-page-pwa/img/IMG_0885.jpeg",
+        "src": "/SD-Calculator/img/Icon.jpeg",
         "type": "image/jpeg",
         "sizes": "1165x1319"
       }
