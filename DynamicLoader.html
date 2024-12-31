@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic HTML Loader with Inline CSS</title>
+  <style>
+    #content {
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin-top: 20px;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h1>Dynamic HTML Content Loader</h1>
+  <p>Enter the name of an HTML file to load its content, including inline CSS:</p>
+
+  <input type="text" id="filename" placeholder="Enter HTML file name">
+  <button onclick="loadHtmlWithInlineStyles()">Load Content</button>
+
+  <div id="content">
+    <!-- Dynamic content will appear here -->
+  </div>
+
+  <script>
+    async function loadHtmlWithInlineStyles() {
+      const filename = document.getElementById("filename").value;
+
+      if (!filename) {
+        alert("Please enter a file name.");
+        return;
+      }
+
+      try {
+        const response = await fetch(filename);
+        if (!response.ok) {
+          throw new Error(`Error loading file: ${response.statusText}`);
+        }
+
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        // Extract and apply inline <style> tags from the <head>
+        const styles = doc.querySelectorAll("style");
+        styles.forEach(style => {
+          const newStyle = document.createElement("style");
+          newStyle.textContent = style.textContent;
+          document.head.appendChild(newStyle);
+        });
+
+        // Insert the body content into the target div
+        const contentDiv = document.getElementById("content");
+        contentDiv.innerHTML = doc.body.innerHTML;
+
+      } catch (error) {
+        document.getElementById("content").innerHTML = `<p style="color: red;">${error.message}</p>`;
+      }
+    }
+  </script>
+</body>
+</html>
