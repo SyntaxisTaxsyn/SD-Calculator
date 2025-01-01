@@ -89,6 +89,8 @@ table.display tr td {
 </head>
 <body>
   <h1>Baker's Percentage Calculator</h1>
+  <br>
+  <button type="button" onclick="calculateRecipePercentages()">Calculate Percentages From Weights</button>
     <table class="display">
 
       <tr><td>Flour</td><td><input type="number" id="flour" required></td><td>g</td></tr>
@@ -97,6 +99,19 @@ table.display tr td {
       <tr><td>Sugar</td><td><input type="number" id="sugar" required></td><td>%</td></tr>
       <tr><td>Oil</td><td><input type="number" id="oil" required></td><td>%</td></tr>
       <tr><td>Other</td><td><input type="number" id="other" required></td><td>%</td></tr>
+
+    </table>
+
+    <table class="display">
+
+      <tr><td>Flour</td><td><input type="number" id="weight-flour" required></td><td>g</td></tr>
+      <tr><td>Water</td><td><input type="number" id="weight-water" required></td><td>g</td></tr>
+      <tr><td>Salt</td><td><input type="number" id="weight-salt" required></td><td>g</td></tr>
+      <tr><td>Sugar</td><td><input type="number" id="weight-sugar" required></td><td>g</td></tr>
+      <tr><td>Oil</td><td><input type="number" id="weight-oil" required></td><td>g</td></tr>
+      <tr><td>Other</td><td><input type="number" id="weight-other" required></td><td>g</td></tr>
+
+    </table>
     
    </br>
     
@@ -139,6 +154,48 @@ table.display tr td {
   <div class="output" id="output"></div>
 
   <script>
+
+    function calculateRecipePercentages(){
+      // This function grabs the weight amounts of the recipe from the weight tab and transposes them into percentages
+
+      // grab the values from the weight tab
+      var flour = document.getElementById("weight-flour").value;
+      var water = document.getElementById("weight-water").value;
+      var salt = document.getElementById("weight-salt").value;
+      var sugar = document.getElementById("weight-sugar").value;
+      var oil = document.getElementById("weight-oil").value;
+      var other = document.getElementById("weight-other").value;
+
+      /* var isValidated = true;
+      if(!flour>-0.001){isValidated = false;}
+      if(!water>-0.001){isValidated = false;}
+      if(!salt>-0.001){isValidated = false;}
+      if(!sugar>-0.001){isValidated = false;}
+      if(!oil>-0.001){isValidated = false;}
+      if(!other>-0.001){isValidated = false;}
+      
+      if(!isValidated){
+        alert("Please enter non zero values for ingredients in grams tab")
+        return;
+      } */
+
+      // Calculate the values of the ingredients as percentage
+      var waterpercent = (water/flour)*100;
+      var saltpercent = (salt/flour)*100;
+      var sugarpercent = (sugar/flour)*100;
+      var oilpercent = (oil/flour)*100;
+      var otherpercent = (other/flour)*100;
+
+      // reflect the calculated percentages into the percent tab
+      document.getElementById("flour").value = flour;
+      document.getElementById("water").value = waterpercent.toFixed(2);
+      document.getElementById("salt").value = saltpercent.toFixed(2);
+      document.getElementById("sugar").value = sugarpercent.toFixed(2);
+      document.getElementById("oil").value = oilpercent.toFixed(2);
+      document.getElementById("other").value = otherpercent.toFixed(2);
+
+    }
+
     function changeStarterType(){
       var selection = document.getElementById("starter-type").checked;
       var text;
