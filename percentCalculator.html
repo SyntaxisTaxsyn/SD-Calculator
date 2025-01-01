@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baker's Percentage Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input {
+      padding: 5px;
+      margin-bottom: 10px;
+      width: 200px;
+    }
+    button {
+      padding: 10px 15px;
+      margin-top: 10px;
+    }
+    .output {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      background-color: #f9f9f9;
+    }
+    
+    .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+  </style>
+</head>
+<body>
+  <h1>Baker's Percentage Calculator</h1>
+  <form id="bakersForm">
+    <label for="flour">Flour (grams):</label>
+    <input type="number" id="flour" required>
+
+    <label for="water">Water (%):</label>
+    <input type="number" id="water" required>
+
+    <label for="salt">Salt (%):</label>
+    <input type="number" id="salt" required>
+
+    <label for="sugar">Sugar (%):</label>
+    <input type="number" id="sugar" required>
+
+    <label for="oil">Oil (%):</label>
+    <input type="number" id="oil" required>
+
+    <label for="other">Other (%):</label>
+    <input type="number" id="other" required>
+    
+   </br>
+    
+    <table>
+      <tr>
+        <td>
+         <label class="switch">
+            <input id="starter-type" type="checkbox" onchange="changeStarterType()" oninput="changeStarterType()">
+            <span class="slider"></span>
+         </label>
+        </td>
+        <td>
+          <p id="starter-type-text">Ratio</p>
+        </td>
+      </tr>
+    </table>
+    
+    <label for="starter">Starter (grams):</label>
+    <input type="number" id="starter" required>
+    <div id="div-ratio" style="display:block;">
+       <label for="starterRatio">Starter Ratio (e.g., 1:1, 2:3):</label>
+       <input type="text" id="starterRatio" placeholder="e.g., 1:1" required>
+    </div>
+    <div id="div-weight" style="display:none;">
+       <label for="starterWeightFlour">Flour</label>
+       <input type="number" id="starterWeightFlour" placeholder="0" required>
+       <label for="starterWeightWater">Water</label>
+       <input type="number" id="starterWeightWater" placeholder="0" required>
+    </div>
+    <button type="button" onclick="calculateRecipe()">Calculate</button>
+  </form>
+
+  <div class="output" id="output"></div>
+
+  <script>
+    function changeStarterType(){
+      var selection = document.getElementById("starter-type").checked;
+      var text;
+      if(selection){
+        text = "Weight";
+        document.getElementById("div-ratio").style.display = "none";
+        document.getElementById("div-weight").style.display = "block";
+      } else {
+        text = "Ratio";
+        document.getElementById("div-ratio").style.display = "block";
+        document.getElementById("div-weight").style.display = "none";
+      };
+      console.log("text = " + text);
+      document.getElementById("starter-type-text").innerHTML = text;
+    }
+  
+    function calculateRecipe() {
+      // Input values
+      const flourInput = parseFloat(document.getElementById("flour").value);
+      const waterPercentage = parseFloat(document.getElementById("water").value) / 100;
+      const saltPercentage = parseFloat(document.getElementById("salt").value) / 100;
+      const sugarPercentage = parseFloat(document.getElementById("sugar").value) / 100;
+      const oilPercentage = parseFloat(document.getElementById("oil").value) / 100;
+      const otherPercentage = parseFloat(document.getElementById("other").value) / 100;
+      const starter = parseFloat(document.getElementById("starter").value);
+      const starterRatio = document.getElementById("starterRatio").value.split(":").map(Number);
+
+      if (starterRatio.length !== 2 || isNaN(starterRatio[0]) || isNaN(starterRatio[1])) {
+        alert("Please enter a valid starter ratio (e.g., 1:1, 2:3).");
+        return;
+      }
+
+      // Calculate starter flour and water
+      const starterFlourRatio = starterRatio[0] / (starterRatio[0] + starterRatio[1]);
+      const starterWaterRatio = starterRatio[1] / (starterRatio[0] + starterRatio[1]);
+      const starterFlour = starter * starterFlourRatio;
+      const starterWater = starter * starterWaterRatio;
+
+      // Calculate amounts
+      const flour = flourInput - starterFlour;
+      const water = (flourInput * waterPercentage) - starterWater;
+      const salt = flourInput * saltPercentage;
+      const sugar = flourInput * sugarPercentage;
+      const oil = flourInput * oilPercentage;
+      const other = flourInput * otherPercentage;
+
+      // Output results
+      const outputDiv = document.getElementById("output");
+      outputDiv.innerHTML = `
+        <h2>Recipe Calculation:</h2>
+        <p><strong>Flour:</strong> ${flour.toFixed(2)} g</p>
+        <p><strong>Water:</strong> ${water.toFixed(2)} g</p>
+        <p><strong>Salt:</strong> ${salt.toFixed(2)} g</p>
+        <p><strong>Sugar:</strong> ${sugar.toFixed(2)} g</p>
+        <p><strong>Oil:</strong> ${oil.toFixed(2)} g</p>
+        <p><strong>Other:</strong> ${other.toFixed(2)} g</p>
+        <p><strong>Starter Flour:</strong> ${starterFlour.toFixed(2)} g</p>
+        <p><strong>Starter Water:</strong> ${starterWater.toFixed(2)} g</p>
+      `;
+    }
+  </script>
+</body>
+</html>
