@@ -80,33 +80,31 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
+table.display tr td {
+  padding: 10px;
+  text-align: center;
+}
+
   </style>
 </head>
 <body>
   <h1>Baker's Percentage Calculator</h1>
-  <form id="bakersForm">
-    <label for="flour">Flour (grams):</label>
-    <input type="number" id="flour" required>
+    <table class="display">
 
-    <label for="water">Water (%):</label>
-    <input type="number" id="water" required>
-
-    <label for="salt">Salt (%):</label>
-    <input type="number" id="salt" required>
-
-    <label for="sugar">Sugar (%):</label>
-    <input type="number" id="sugar" required>
-
-    <label for="oil">Oil (%):</label>
-    <input type="number" id="oil" required>
-
-    <label for="other">Other (%):</label>
-    <input type="number" id="other" required>
+      <tr><td>Flour</td><td><input type="number" id="flour" required></td><td>g</td></tr>
+      <tr><td>Water</td><td><input type="number" id="water" required></td><td>%</td></tr>
+      <tr><td>Salt</td><td><input type="number" id="salt" required></td><td>%</td></tr>
+      <tr><td>Sugar</td><td><input type="number" id="sugar" required></td><td>%</td></tr>
+      <tr><td>Oil</td><td><input type="number" id="oil" required></td><td>%</td></tr>
+      <tr><td>Other</td><td><input type="number" id="other" required></td><td>%</td></tr>
     
    </br>
     
-    <table>
+    <table class="display">
       <tr>
+        <td>
+          Starter Configuration
+        </td>
         <td>
          <label class="switch">
             <input id="starter-type" type="checkbox" onchange="changeStarterType()" oninput="changeStarterType()">
@@ -119,20 +117,24 @@ input:checked + .slider:before {
       </tr>
     </table>
     
-    <label for="starter">Starter (grams):</label>
-    <input type="number" id="starter" required>
+    
     <div id="div-ratio" style="display:block;">
-       <label for="starterRatio">Starter Ratio (e.g., 1:1, 2:3):</label>
-       <input type="text" id="starterRatio" placeholder="e.g., 1:1" required>
+      <table class="display">
+        <tr><td>Starter Amount</td><td><input type="number" id="starter" required></td><td>grams</td></tr>
+        <tr><td>Starter Ratio</td><td><input type="text" id="starterRatio" placeholder="e.g., 1:1" required></td><td>grams</td></tr>
+      </table>
+       <br/>
+       <button type="button" onclick="calculateRecipeRatio()">Calculate</button>
     </div>
     <div id="div-weight" style="display:none;">
-       <label for="starterWeightFlour">Flour</label>
-       <input type="number" id="starterWeightFlour" placeholder="0" required>
-       <label for="starterWeightWater">Water</label>
-       <input type="number" id="starterWeightWater" placeholder="0" required>
+      <table class="display">
+        <tr><td>Flour</td><td><input type="number" id="starterWeightFlour" placeholder="0" required></td><td>g</td></tr>
+        <tr><td>Water</td><td><input type="number" id="starterWeightWater" placeholder="0" required></td><td>g</td></tr>
+      </table>       
+       <br/>
+       <button type="button" onclick="calculateRecipeWeight()">Calculate</button>
     </div>
-    <button type="button" onclick="calculateRecipe()">Calculate</button>
-  </form>
+  
 
   <div class="output" id="output"></div>
 
@@ -153,7 +155,7 @@ input:checked + .slider:before {
       document.getElementById("starter-type-text").innerHTML = text;
     }
   
-    function calculateRecipe() {
+    function calculateRecipeRatio() {
       // Input values
       const flourInput = parseFloat(document.getElementById("flour").value);
       const waterPercentage = parseFloat(document.getElementById("water").value) / 100;
@@ -183,6 +185,8 @@ input:checked + .slider:before {
       const oil = flourInput * oilPercentage;
       const other = flourInput * otherPercentage;
 
+      var total = flour + water + salt + sugar + oil + other + starter;
+
       // Output results
       const outputDiv = document.getElementById("output");
       outputDiv.innerHTML = `
@@ -195,6 +199,55 @@ input:checked + .slider:before {
         <p><strong>Other:</strong> ${other.toFixed(2)} g</p>
         <p><strong>Starter Flour:</strong> ${starterFlour.toFixed(2)} g</p>
         <p><strong>Starter Water:</strong> ${starterWater.toFixed(2)} g</p>
+        <p><strong>Recipe Total:</strong> ${total.toFixed(2)} g</p>
+      `;
+    }
+
+    function calculateRecipeWeight() {
+      // Input values
+      const flourInput = parseFloat(document.getElementById("flour").value);
+      const waterPercentage = parseFloat(document.getElementById("water").value) / 100;
+      const saltPercentage = parseFloat(document.getElementById("salt").value) / 100;
+      const sugarPercentage = parseFloat(document.getElementById("sugar").value) / 100;
+      const oilPercentage = parseFloat(document.getElementById("oil").value) / 100;
+      const otherPercentage = parseFloat(document.getElementById("other").value) / 100;
+      const flourQty = parseFloat(document.getElementById("starterWeightFlour").value);
+      const waterQty = parseFloat(document.getElementById("starterWeightWater").value);
+      const starter = flourQty + waterQty;
+
+      if ( !starter > 0 || !waterQty > 0 || !flourQty > 0) {
+        alert("Please enter valid flour/water quantites");
+        return;
+      }
+
+      // Calculate starter flour and water
+      const starterFlour = flourQty;
+      const starterWater = waterQty;
+
+      // Calculate amounts
+      const flour = flourInput - starterFlour;
+      const water = (flourInput * waterPercentage) - starterWater;
+      const salt = flourInput * saltPercentage;
+      const sugar = flourInput * sugarPercentage;
+      const oil = flourInput * oilPercentage;
+      const other = flourInput * otherPercentage;
+
+      var total = flour + water + salt + sugar + oil + other + starterFlour + starterWater;
+
+
+      // Output results
+      const outputDiv = document.getElementById("output");
+      outputDiv.innerHTML = `
+        <h2>Recipe Calculation:</h2>
+        <p><strong>Flour:</strong> ${flour.toFixed(2)} g</p>
+        <p><strong>Water:</strong> ${water.toFixed(2)} g</p>
+        <p><strong>Salt:</strong> ${salt.toFixed(2)} g</p>
+        <p><strong>Sugar:</strong> ${sugar.toFixed(2)} g</p>
+        <p><strong>Oil:</strong> ${oil.toFixed(2)} g</p>
+        <p><strong>Other:</strong> ${other.toFixed(2)} g</p>
+        <p><strong>Starter Flour:</strong> ${starterFlour.toFixed(2)} g</p>
+        <p><strong>Starter Water:</strong> ${starterWater.toFixed(2)} g</p>
+        <p><strong>Recipe Total:</strong> ${total.toFixed(2)} g</p>
       `;
     }
   </script>
