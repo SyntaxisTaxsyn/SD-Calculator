@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SD ingredients weight input</title>
+  <style>
+  </style>
+</head>
+<body>
+  <h1>Ingredients By Weight</h1>
+  <br/>
+  <button type="button" onclick="calculateRecipeWeights()">Calculate Weights From Percentages</button>
+  <table class="display">
+    <tr><td>Flour</td><td><input type="number" id="weight-flour" required></td><td>g</td></tr>
+    <tr><td>Water</td><td><input type="number" id="weight-water" required></td><td>g</td></tr>
+    <tr><td>Salt</td><td><input type="number" id="weight-salt" required></td><td>g</td></tr>
+    <tr><td>Sugar</td><td><input type="number" id="weight-sugar" required></td><td>g</td></tr>
+    <tr><td>Oil</td><td><input type="number" id="weight-oil" required></td><td>g</td></tr>
+    <tr><td>Other</td><td><input type="number" id="weight-other" required></td><td>g</td></tr>
+
+  </table>
+
+  <script>
+
+    function calculateRecipePercentages(){
+      // This function grabs the percent amounts of the recipe from the percent tab and transposes them into percentages
+
+      // grab the values from the weight tab
+      var flour = document.getElementById("flour").value;
+      var water = document.getElementById("water").value;
+      var salt = document.getElementById("salt").value;
+      var sugar = document.getElementById("sugar").value;
+      var oil = document.getElementById("oil").value;
+      var other = document.getElementById("other").value;
+
+      // Calculate the values of the ingredients as percentage
+      var waterweight = (flour/100) * water;
+      var saltweight = (flour/100) * salt;
+      var sugarweight = (flour/100) * sugar;
+      var oilweight = (flour/100) * oil;
+      var otherweight = (flour/100) * other;
+
+      // reflect the calculated percentages into the percent tab
+      document.getElementById("weight-flour").value = flour;
+      document.getElementById("weight-water").value = waterpercent.toFixed(2);
+      document.getElementById("weight-salt").value = saltpercent.toFixed(2);
+      document.getElementById("weight-sugar").value = sugarpercent.toFixed(2);
+      document.getElementById("weight-oil").value = oilpercent.toFixed(2);
+      document.getElementById("weight-other").value = otherpercent.toFixed(2);
+
+    }
+    
+
+  </script>
+</body>
+</html>

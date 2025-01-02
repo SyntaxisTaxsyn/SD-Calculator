@@ -88,7 +88,7 @@ table.display tr td {
   </style>
 </head>
 <body>
-  <h1>Baker's Percentage Calculator</h1>
+  <h1>Ingredients By Percentage Calculator</h1>
   <br>
   <button type="button" onclick="calculateRecipePercentages()">Calculate Percentages From Weights</button>
     <table class="display">
@@ -101,18 +101,6 @@ table.display tr td {
       <tr><td>Other</td><td><input type="number" id="other" required></td><td>%</td></tr>
 
     </table>
-
-    <table class="display">
-
-      <tr><td>Flour</td><td><input type="number" id="weight-flour" required></td><td>g</td></tr>
-      <tr><td>Water</td><td><input type="number" id="weight-water" required></td><td>g</td></tr>
-      <tr><td>Salt</td><td><input type="number" id="weight-salt" required></td><td>g</td></tr>
-      <tr><td>Sugar</td><td><input type="number" id="weight-sugar" required></td><td>g</td></tr>
-      <tr><td>Oil</td><td><input type="number" id="weight-oil" required></td><td>g</td></tr>
-      <tr><td>Other</td><td><input type="number" id="weight-other" required></td><td>g</td></tr>
-
-    </table>
-    
    </br>
     
     <table class="display">
@@ -165,19 +153,6 @@ table.display tr td {
       var sugar = document.getElementById("weight-sugar").value;
       var oil = document.getElementById("weight-oil").value;
       var other = document.getElementById("weight-other").value;
-
-      /* var isValidated = true;
-      if(!flour>-0.001){isValidated = false;}
-      if(!water>-0.001){isValidated = false;}
-      if(!salt>-0.001){isValidated = false;}
-      if(!sugar>-0.001){isValidated = false;}
-      if(!oil>-0.001){isValidated = false;}
-      if(!other>-0.001){isValidated = false;}
-      
-      if(!isValidated){
-        alert("Please enter non zero values for ingredients in grams tab")
-        return;
-      } */
 
       // Calculate the values of the ingredients as percentage
       var waterpercent = (water/flour)*100;

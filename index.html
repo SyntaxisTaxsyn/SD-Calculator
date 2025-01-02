@@ -25,14 +25,10 @@
    <div class="content">
         <!-- Content for each page, only one will be visible at a time -->
         <div id="percent" class="page active">
-            <h1>Calculate by Percentage</h1>
-            <br/>
-            <p>Calculate dough by percentage</p>
+            <!--Content here is populated by a JS function from another HMTL source file-->
         </div>
         <div id="weight" class="page">
-            <h1>Calculate by Weight</h1>
-            <br/>
-            <p>Calculate dough by Weight</p>
+            <!--Content here is populated by a JS function from another HMTL source file-->
         </div>
         <div id="yield" class="page">
             <h1>Calculate by Yield</h1>
@@ -45,9 +41,7 @@
             <p>Save/load your recipes here</p>
         </div>
         <div id="schedule" class="page">
-            <h1>Starter Feed Schedule</h1>
-            <br/>
-            <p>Calculate your starter feed schedule here.</p>
+            <!--Content here is populated by a JS function from another HMTL source file-->
         </div>
     </div>
 
@@ -133,6 +127,8 @@
     }
 
     loadHtmlWithInlineStyles("starterSchedule.html","schedule");
+    loadHtmlWithInlineStyles("percentCalculator.html","percent");
+    loadHtmlWithInlineStyles("weightInput.html","weight");
   
   </script>
 </body>

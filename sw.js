@@ -1,13 +1,15 @@
 var GHPATH = '/SD-Calculator';
 var APP_PREFIX = 'SD Calculator_';
-var VERSION = 'version_002';
+var VERSION = 'version_003';
 var URLS = [    
   `${GHPATH}/`,
   `${GHPATH}/index.html`,
   `${GHPATH}/css/styles.css`,
   `${GHPATH}/img/icon.png`,
   `${GHPATH}/js/app.js`,
-  `${GHPATH}/starterSchedule.html`
+  `${GHPATH}/starterSchedule.html`,
+  `${GHPATH}/percentCalculator.html`,
+  `${GHPATH}/weightInput.html`
 ]
 
 var CACHE_NAME = APP_PREFIX + VERSION
