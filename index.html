@@ -9,27 +9,190 @@
   <link rel="stylesheet" href="css/styles.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <style>
-    input {
+      body {
+          font-family: Arial, sans-serif;
+          margin: 0px;
+      }
+
+      label {
+          display: block;
+          margin: 10px 0 5px;
+      }
+ /*   input {
       margin: 5px 0;
       padding: 8px;
       width: 100px;
-    }
-    button {
+    }*/
+/*    button {
       padding: 8px 12px;
       cursor: pointer;
-    }
+    }*/
+      button {
+          padding: 10px 15px;
+          margin-top: 10px;
+      }
+      input {
+          padding: 5px;
+          margin-bottom: 10px;
+          width: 200px;
+      }
+      .output {
+          margin-top: 20px;
+          padding: 15px;
+          border: 1px solid #ddd;
+          background-color: #f9f9f9;
+      }
+
+      .switch {
+          position: relative;
+          display: inline-block;
+          width: 60px;
+          height: 34px;
+      }
+
+          .switch input {
+              opacity: 0;
+              width: 0;
+              height: 0;
+          }
+
+      .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          -webkit-transition: .4s;
+          transition: .4s;
+      }
+
+          .slider:before {
+              position: absolute;
+              content: "";
+              height: 26px;
+              width: 26px;
+              left: 4px;
+              bottom: 4px;
+              background-color: white;
+              -webkit-transition: .4s;
+              transition: .4s;
+          }
+
+      input:checked + .slider {
+          background-color: #2196F3;
+      }
+
+      input:focus + .slider {
+          box-shadow: 0 0 1px #2196F3;
+      }
+
+      input:checked + .slider:before {
+          -webkit-transform: translateX(26px);
+          -ms-transform: translateX(26px);
+          transform: translateX(26px);
+      }
+
+      table.display tr td {
+          padding: 10px;
+          text-align: center;
+      }
+
+      table {
+          border-collapse: collapse;
+          width: 100%;
+          margin-top: 20px;
+      }
+
+      table, th, td {
+          border: 1px solid #ddd;
+      }
+
+      th, td {
+          padding: 8px;
+          text-align: center;
+      }
+
+      th {
+          background-color: #f4f4f4;
+      }
   </style>
 </head>
 <body>
  
    <div class="content">
         <!-- Content for each page, only one will be visible at a time -->
-        <div id="percent" class="page active">
-            <!--Content here is populated by a JS function from another HMTL source file-->
-        </div>
-        <div id="weight" class="page">
-            <!--Content here is populated by a JS function from another HMTL source file-->
-        </div>
+       <div id="percent" class="page active">
+           <!--Content here is populated by a JS function from another HMTL source file-->
+           <h1>Ingredients By Percentage Calculator</h1>
+           <br>
+           <button type="button" onclick="calculateRecipePercentagesFromWeight()">Calculate Percentages From Weights</button>
+           <table class="display">
+
+               <tr><td>Flour</td><td><input type="number" id="flour" required></td><td>g</td></tr>
+               <tr><td>Water</td><td><input type="number" id="water" required></td><td>%</td></tr>
+               <tr><td>Salt</td><td><input type="number" id="salt" required></td><td>%</td></tr>
+               <tr><td>Sugar</td><td><input type="number" id="sugar" required></td><td>%</td></tr>
+               <tr><td>Oil</td><td><input type="number" id="oil" required></td><td>%</td></tr>
+               <tr><td>Other</td><td><input type="number" id="other" required></td><td>%</td></tr>
+
+           </table>
+           </br>
+
+           <table class="display">
+               <tr>
+                   <td>
+                       Starter Configuration
+                   </td>
+                   <td>
+                       <label class="switch">
+                           <input id="starter-type" type="checkbox" onchange="changeStarterType()" oninput="changeStarterType()">
+                           <span class="slider"></span>
+                       </label>
+                   </td>
+                   <td>
+                       <p id="starter-type-text">Ratio</p>
+                   </td>
+               </tr>
+           </table>
+
+
+           <div id="div-ratio" style="display:block;">
+               <table class="display">
+                   <tr><td>Starter Amount</td><td><input type="number" id="starter" required></td><td>grams</td></tr>
+                   <tr><td>Starter Ratio</td><td><input type="text" id="starterRatio" placeholder="e.g., 1:1" required></td><td>grams</td></tr>
+               </table>
+               <br />
+               <button type="button" onclick="calculateRecipeRatio()">Calculate</button>
+           </div>
+           <div id="div-weight" style="display:none;">
+               <table class="display">
+                   <tr><td>Flour</td><td><input type="number" id="starterWeightFlour" placeholder="0" required></td><td>g</td></tr>
+                   <tr><td>Water</td><td><input type="number" id="starterWeightWater" placeholder="0" required></td><td>g</td></tr>
+               </table>
+               <br />
+               <button type="button" onclick="calculateRecipeWeight()">Calculate</button>
+           </div>
+
+
+           <div class="output" id="output"></div>
+       </div>
+       <div id="weight" class="page">
+           <!--Content here is populated by a JS function from another HMTL source file-->
+           <h1>Ingredients By Weight</h1>
+           <br />
+           <button type="button" onclick="calculateRecipeWeights()">Calculate Weights From Percentages</button>
+           <table class="display">
+               <tr><td>Flour</td><td><input type="number" id="weight-flour" required></td><td>g</td></tr>
+               <tr><td>Water</td><td><input type="number" id="weight-water" required></td><td>g</td></tr>
+               <tr><td>Salt</td><td><input type="number" id="weight-salt" required></td><td>g</td></tr>
+               <tr><td>Sugar</td><td><input type="number" id="weight-sugar" required></td><td>g</td></tr>
+               <tr><td>Oil</td><td><input type="number" id="weight-oil" required></td><td>g</td></tr>
+               <tr><td>Other</td><td><input type="number" id="weight-other" required></td><td>g</td></tr>
+
+           </table>
+       </div>
         <div id="yield" class="page">
             <h1>Calculate by Yield</h1>
             <br/>
@@ -42,6 +205,32 @@
         </div>
         <div id="schedule" class="page">
             <!--Content here is populated by a JS function from another HMTL source file-->
+            <h1>Bread Starter Feed Calculator</h1>
+            <p>Enter the target quantity and number of feeds to calculate your feed schedule.</p>
+            <form id="feedForm">
+                <label for="targetQuantity">Target Quantity (g):</label>
+                <input type="number" id="targetQuantity" required><br>
+                <label for="numberOfFeeds">Number of Feeds:</label>
+                <input type="number" id="numberOfFeeds" required><br>
+                <label for="hoursPerFeed">Hours Between Feeds:</label>
+                <input type="number" id="hoursPerFeed" required><br>
+                <button type="button" onclick="generateFeedSchedule()">Calculate</button>
+            </form>
+
+            <table id="feedScheduleTable">
+                <thead>
+                    <tr>
+                        <th>Feed</th>
+                        <th>Starter (g)</th>
+                        <th>Flour (g)</th>
+                        <th>Water (g)</th>
+                        <th>Total (g)</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -54,14 +243,16 @@
         <a href="javascript:void(0);" onclick="changeContent('schedule')"><i class="fa-regular fa-clock"></i></a>
     </div>
 
+    <p>App Version 202501111346</p>
+
 
   <script>
-      if (navigator.serviceWorker) {
-        navigator.serviceWorker.register (
-          '/SD-Calculator/sw.js',
-          {scope: '/SD-Calculator/'}
-        )
-      }
+      //if (navigator.serviceWorker) {
+      //  navigator.serviceWorker.register (
+      //    '/SD-Calculator/sw.js',
+      //    {scope: '/SD-Calculator/'}
+      //  )
+      //}
   </script>
   <script src="js/app.js"></script>
   <script>
@@ -126,9 +317,265 @@
       }
     }
 
-    loadHtmlWithInlineStyles("starterSchedule.html","schedule");
-    loadHtmlWithInlineStyles("percentCalculator.html","percent");
-    loadHtmlWithInlineStyles("weightInput.html","weight");
+    //loadHtmlWithInlineStyles("starterSchedule.html","schedule");
+    //loadHtmlWithInlineStyles("percentCalculator.html","percent");
+    //loadHtmlWithInlineStyles("weightInput.html", "weight");
+
+      function calculateRecipePercentagesFromWeight() {
+          // This function grabs the weight amounts of the recipe from the weight tab and transposes them into percentages
+
+          // grab the values from the weight tab
+          var flour = document.getElementById("weight-flour").value;
+          var water = document.getElementById("weight-water").value;
+          var salt = document.getElementById("weight-salt").value;
+          var sugar = document.getElementById("weight-sugar").value;
+          var oil = document.getElementById("weight-oil").value;
+          var other = document.getElementById("weight-other").value;
+
+          // Calculate the values of the ingredients as percentage
+          var waterpercent = (water / flour) * 100;
+          var saltpercent = (salt / flour) * 100;
+          var sugarpercent = (sugar / flour) * 100;
+          var oilpercent = (oil / flour) * 100;
+          var otherpercent = (other / flour) * 100;
+
+          // reflect the calculated percentages into the percent tab
+          document.getElementById("flour").value = flour;
+          document.getElementById("water").value = waterpercent.toFixed(2);
+          document.getElementById("salt").value = saltpercent.toFixed(2);
+          document.getElementById("sugar").value = sugarpercent.toFixed(2);
+          document.getElementById("oil").value = oilpercent.toFixed(2);
+          document.getElementById("other").value = otherpercent.toFixed(2);
+
+      }
+
+      function changeStarterType() {
+          var selection = document.getElementById("starter-type").checked;
+          var text;
+          if (selection) {
+              text = "Weight";
+              document.getElementById("div-ratio").style.display = "none";
+              document.getElementById("div-weight").style.display = "block";
+          } else {
+              text = "Ratio";
+              document.getElementById("div-ratio").style.display = "block";
+              document.getElementById("div-weight").style.display = "none";
+          };
+          console.log("text = " + text);
+          document.getElementById("starter-type-text").innerHTML = text;
+      }
+
+      function calculateRecipeRatio() {
+          // Input values
+          const flourInput = parseFloat(document.getElementById("flour").value);
+          const waterPercentage = parseFloat(document.getElementById("water").value) / 100;
+          const saltPercentage = parseFloat(document.getElementById("salt").value) / 100;
+          const sugarPercentage = parseFloat(document.getElementById("sugar").value) / 100;
+          const oilPercentage = parseFloat(document.getElementById("oil").value) / 100;
+          const otherPercentage = parseFloat(document.getElementById("other").value) / 100;
+          const starter = parseFloat(document.getElementById("starter").value);
+          const starterRatio = document.getElementById("starterRatio").value.split(":").map(Number);
+
+          if (starterRatio.length !== 2 || isNaN(starterRatio[0]) || isNaN(starterRatio[1])) {
+              alert("Please enter a valid starter ratio (e.g., 1:1, 2:3).");
+              return;
+          }
+
+          // Calculate starter flour and water
+          const starterFlourRatio = starterRatio[0] / (starterRatio[0] + starterRatio[1]);
+          const starterWaterRatio = starterRatio[1] / (starterRatio[0] + starterRatio[1]);
+          const starterFlour = starter * starterFlourRatio;
+          const starterWater = starter * starterWaterRatio;
+
+          // Calculate amounts
+          const flour = flourInput - starterFlour;
+          const water = (flourInput * waterPercentage) - starterWater;
+          const salt = flourInput * saltPercentage;
+          const sugar = flourInput * sugarPercentage;
+          const oil = flourInput * oilPercentage;
+          const other = flourInput * otherPercentage;
+
+          var total = flour + water + salt + sugar + oil + other + starter;
+
+          // Output results
+          const outputDiv = document.getElementById("output");
+          outputDiv.innerHTML = `
+    <h2>Recipe Calculation:</h2>
+    <p><strong>Flour:</strong> ${flour.toFixed(2)} g</p>
+    <p><strong>Water:</strong> ${water.toFixed(2)} g</p>
+    <p><strong>Salt:</strong> ${salt.toFixed(2)} g</p>
+    <p><strong>Sugar:</strong> ${sugar.toFixed(2)} g</p>
+    <p><strong>Oil:</strong> ${oil.toFixed(2)} g</p>
+    <p><strong>Other:</strong> ${other.toFixed(2)} g</p>
+    <p><strong>Starter Flour:</strong> ${starterFlour.toFixed(2)} g</p>
+    <p><strong>Starter Water:</strong> ${starterWater.toFixed(2)} g</p>
+    <p><strong>Recipe Total:</strong> ${total.toFixed(2)} g</p>
+  `;
+      }
+
+      function calculateRecipeWeight() {
+          // Input values
+          const flourInput = parseFloat(document.getElementById("flour").value);
+          const waterPercentage = parseFloat(document.getElementById("water").value) / 100;
+          const saltPercentage = parseFloat(document.getElementById("salt").value) / 100;
+          const sugarPercentage = parseFloat(document.getElementById("sugar").value) / 100;
+          const oilPercentage = parseFloat(document.getElementById("oil").value) / 100;
+          const otherPercentage = parseFloat(document.getElementById("other").value) / 100;
+          const flourQty = parseFloat(document.getElementById("starterWeightFlour").value);
+          const waterQty = parseFloat(document.getElementById("starterWeightWater").value);
+          const starter = flourQty + waterQty;
+
+          if (!starter > 0 || !waterQty > 0 || !flourQty > 0) {
+              alert("Please enter valid flour/water quantites");
+              return;
+          }
+
+          // Calculate starter flour and water
+          const starterFlour = flourQty;
+          const starterWater = waterQty;
+
+          // Calculate amounts
+          const flour = flourInput - starterFlour;
+          const water = (flourInput * waterPercentage) - starterWater;
+          const salt = flourInput * saltPercentage;
+          const sugar = flourInput * sugarPercentage;
+          const oil = flourInput * oilPercentage;
+          const other = flourInput * otherPercentage;
+
+          var total = flour + water + salt + sugar + oil + other + starterFlour + starterWater;
+
+
+          // Output results
+          const outputDiv = document.getElementById("output");
+          outputDiv.innerHTML = `
+    <h2>Recipe Calculation:</h2>
+    <p><strong>Flour:</strong> ${flour.toFixed(2)} g</p>
+    <p><strong>Water:</strong> ${water.toFixed(2)} g</p>
+    <p><strong>Salt:</strong> ${salt.toFixed(2)} g</p>
+    <p><strong>Sugar:</strong> ${sugar.toFixed(2)} g</p>
+    <p><strong>Oil:</strong> ${oil.toFixed(2)} g</p>
+    <p><strong>Other:</strong> ${other.toFixed(2)} g</p>
+    <p><strong>Starter Flour:</strong> ${starterFlour.toFixed(2)} g</p>
+    <p><strong>Starter Water:</strong> ${starterWater.toFixed(2)} g</p>
+    <p><strong>Recipe Total:</strong> ${total.toFixed(2)} g</p>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <p>Calculation Complete</p>
+  `;
+      }
+
+      function calculateRecipeWeights() {
+          // This function grabs the percent amounts of the recipe from the percent tab and transposes them into percentages
+
+          // grab the values from the weight tab
+          var flour = document.getElementById("flour").value;
+          var water = document.getElementById("water").value;
+          var salt = document.getElementById("salt").value;
+          var sugar = document.getElementById("sugar").value;
+          var oil = document.getElementById("oil").value;
+          var other = document.getElementById("other").value;
+
+          // Calculate the values of the ingredients as percentage
+          var waterweight = (flour / 100) * water;
+          var saltweight = (flour / 100) * salt;
+          var sugarweight = (flour / 100) * sugar;
+          var oilweight = (flour / 100) * oil;
+          var otherweight = (flour / 100) * other;
+
+          // reflect the calculated percentages into the percent tab
+          document.getElementById("weight-flour").value = flour;
+          document.getElementById("weight-water").value = waterweight.toFixed(2);
+          document.getElementById("weight-salt").value = saltweight.toFixed(2);
+          document.getElementById("weight-sugar").value = sugarweight.toFixed(2);
+          document.getElementById("weight-oil").value = oilweight.toFixed(2);
+          document.getElementById("weight-other").value = otherweight.toFixed(2);
+
+      }
+
+      function calculateFeedSchedule(targetQuantity, numberOfFeeds, hoursPerFeed) {
+          const feedSchedule = [];
+          let currentStarter = targetQuantity / 2;
+          let totalTime = 0;
+
+          // Work backwards from the target quantity to calculate each feed
+          for (let i = numberOfFeeds; i > 0; i--) {
+              const flour = currentStarter / 2; // Flour is half the current starter
+              const water = flour;            // Water is equal to flour
+              const starter = currentStarter
+              const total = starter + flour + water;
+
+              feedSchedule.unshift({
+                  feed: i,
+                  starter: starter,
+                  flour: flour,
+                  water: water,
+                  total: total,
+                  time: totalTime,
+              });
+
+              // For the next step, the starter becomes the current starter
+              currentStarter = starter / 2;
+              totalTime += hoursPerFeed;
+          }
+
+          return feedSchedule;
+      }
+
+      function generateFeedSchedule() {
+
+          const targetQuantity = parseFloat(document.getElementById("targetQuantity").value);
+          const numberOfFeeds = parseInt(document.getElementById("numberOfFeeds").value);
+          const hoursPerFeed = parseInt(document.getElementById("hoursPerFeed").value);
+
+          if (isNaN(targetQuantity) || isNaN(numberOfFeeds) || isNaN(hoursPerFeed) || targetQuantity <= 0 || numberOfFeeds <= 0 || hoursPerFeed <= 0) {
+              alert("Please enter valid positive numbers for all fields.");
+              return;
+          }
+
+          const timeSchedule = calculateSchedule(hoursPerFeed, numberOfFeeds);
+          const feedSchedule = calculateFeedSchedule(targetQuantity, numberOfFeeds, hoursPerFeed);
+          const tableBody = document.getElementById("feedScheduleTable").querySelector("tbody");
+          const TotalTime = hoursPerFeed * numberOfFeeds;
+
+          // Clear any existing rows
+          tableBody.innerHTML = "";
+          let indexCount = 0;
+
+          // Populate the table with the feed schedule
+          feedSchedule.forEach(feed => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+                <td>${feed.feed}</td>
+                <td>${feed.starter.toFixed(1)}</td>
+                <td>${feed.flour.toFixed(1)}</td>
+                <td>${feed.water.toFixed(1)}</td>
+                <td>${feed.total.toFixed(1)}</td>
+                <td>${timeSchedule[indexCount].toString()}</td>
+            `;
+              tableBody.appendChild(row);
+              indexCount += 1;
+          });
+      }
+
+      function calculateSchedule(intervalInHours, numberOfTasks) {
+          // Get the current time (starting point)
+          const now = new Date();
+
+          // Create an array to hold the future timestamps
+          const schedule = [];
+          schedule.push(now.toLocaleString()) // Start by feeding in the time we started at assuming its now
+
+          // Calculate the timestamp for each task
+          for (let i = 1; i <= numberOfTasks; i++) {
+              // Add the interval to the current time for each task
+              const taskTime = new Date(now.getTime() + (intervalInHours * i * 60 * 60 * 1000)); // Convert hours to milliseconds
+              schedule.push(taskTime.toLocaleString()); // Add the formatted date string to the schedule
+          }
+
+          return schedule;
+      }
   
   </script>
 </body>

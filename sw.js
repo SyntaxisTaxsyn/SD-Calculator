@@ -1,6 +1,6 @@
 var GHPATH = '/SD-Calculator';
 var APP_PREFIX = 'SD Calculator_';
-var VERSION = 'version_004';
+var VERSION = 'version_005';
 var URLS = [    
   `${GHPATH}/`,
   `${GHPATH}/index.html`,
