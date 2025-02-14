@@ -130,6 +130,7 @@
            <button type="button" onclick="calculateRecipePercentagesFromWeight()">Calculate Percentages From Weights</button>
            <table class="display">
 
+               <tr><td>Name</td><td><input type="text" id="name" required></td><td></td></tr>
                <tr><td>Flour</td><td><input type="number" id="flour" required></td><td>g</td></tr>
                <tr><td>Water</td><td><input type="number" id="water" required></td><td>%</td></tr>
                <tr><td>Salt</td><td><input type="number" id="salt" required></td><td>%</td></tr>
@@ -193,16 +194,36 @@
 
            </table>
        </div>
-        <div id="yield" class="page">
-            <h1>Calculate by Yield</h1>
-            <br/>
-            <p>Calculate dough by yield</p>
-        </div>
-        <div id="recipe" class="page">
-            <h1>Recipe Save/Load</h1>
-            <br/>
-            <p>Save/load your recipes here</p>
-        </div>
+       <div id="yield" class="page">
+           <h1>Calculate by Yield</h1>
+           <br>
+
+           <table class="display">
+
+               <tr><td>Output</td><td><input type="number" id="output-required" required></td><td>g</td></tr>
+               <!--<tr><td>Water</td><td><input type="number" id="water" required></td><td>%</td></tr>
+    <tr><td>Salt</td><td><input type="number" id="salt" required></td><td>%</td></tr>
+    <tr><td>Sugar</td><td><input type="number" id="sugar" required></td><td>%</td></tr>
+    <tr><td>Oil</td><td><input type="number" id="oil" required></td><td>%</td></tr>
+    <tr><td>Other</td><td><input type="number" id="other" required></td><td>%</td></tr>-->
+
+           </table>
+           <button type="button" onclick="calculateForYield()">Calculate Amounts</button>
+           <div class="output" id="output-yield"></div>
+       </div>
+
+       <div id="recipe" class="page">
+           <h1>Recipe Save/Load</h1>
+           <br />
+           <button id="saveButton" onclick="AddRecipe()">Save Recipes</button>
+           <button id="loadButton">Load Recipes</button>
+           <button id="displayButton">Display Recipes</button>
+
+           <div id="recipeDisplay">
+               <!-- Recipes will be displayed here -->
+           </div>
+
+       </div>
         <div id="schedule" class="page">
             <!--Content here is populated by a JS function from another HMTL source file-->
             <h1>Bread Starter Feed Calculator</h1>
@@ -243,7 +264,7 @@
         <a href="javascript:void(0);" onclick="changeContent('schedule')"><i class="fa-regular fa-clock"></i></a>
     </div>
 
-    <p>App Version 202501111346</p>
+    <p>App Version 202502141223</p>
 
 
   <script>
@@ -413,6 +434,54 @@
   `;
       }
 
+      function calculateForYield() {
+          // This function takes an input of total output weight required for the whole recope and runs a calculation on that
+          // It will look at the percentage ingredients for the recipe in the percentage tab and work out the gram amounts to make
+          // a certain quantity of the recipe
+
+          const total = parseFloat(document.getElementById("output-required").value);
+
+          const flourPercentage = 100 // Assume 100 percent for the flour // = parseFloat(document.getElementById("flour").value);
+          const waterPercentage = parseFloat(document.getElementById("water").value);
+          const saltPercentage = parseFloat(document.getElementById("salt").value);
+          const sugarPercentage = parseFloat(document.getElementById("sugar").value);
+          const oilPercentage = parseFloat(document.getElementById("oil").value);
+          const otherPercentage = parseFloat(document.getElementById("other").value);
+          //const flourQty = parseFloat(document.getElementById("starterWeightFlour").value);
+          //const waterQty = parseFloat(document.getElementById("starterWeightWater").value);
+          //const starter = flourQty + waterQty;
+
+          var totalPercent = flourPercentage + waterPercentage + saltPercentage + sugarPercentage + oilPercentage + otherPercentage;
+
+          const flourout = total / totalPercent * flourPercentage;
+          const waterout = total / totalPercent * waterPercentage;
+          const saltout = total / totalPercent * saltPercentage;
+          const sugarout = total / totalPercent * sugarPercentage;
+          const oilout = total / totalPercent * oilPercentage;
+          const otherout = total / totalPercent * otherPercentage;
+
+          // Output results
+          const outputDiv = document.getElementById("output-yield");
+          outputDiv.innerHTML = `
+          <h2>Yield Calculation:</h2>
+          <p><strong>Flour:</strong> ${flourout.toFixed(2)} g</p>
+          <p><strong>Water:</strong> ${waterout.toFixed(2)} g</p>
+          <p><strong>Salt:</strong> ${saltout.toFixed(2)} g</p>
+          <p><strong>Sugar:</strong> ${sugarout.toFixed(2)} g</p>
+          <p><strong>Oil:</strong> ${oilout.toFixed(2)} g</p>
+          <p><strong>Other:</strong> ${otherout.toFixed(2)} g</p>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <p>Calculation Complete</p>
+        `;
+
+
+      }
+
+
+
       function calculateRecipeWeight() {
           // Input values
           const flourInput = parseFloat(document.getElementById("flour").value);
@@ -576,6 +645,225 @@
 
           return schedule;
       }
+
+      class Ingredient {
+          constructor(name, qty) {
+              this.name = name;
+              this.qty = qty;
+          }
+
+      }
+
+      class Recipe {
+          constructor(name) {
+              this.name = name;
+              this.ingredients = [];
+          }
+
+          addIngredient(name, qty) {
+              this.ingredients.push(new Ingredient(name, qty));
+          }
+      }
+
+      // Define the RecipeList class
+      class RecipeList {
+          constructor() {
+              this.recipes = [];
+          }
+
+          addRecipe(recipe) {
+              this.recipes.push(recipe);
+          }
+
+          // Serialize the RecipeList to localStorage
+          saveToLocalStorage() {
+
+              
+
+
+              const serializedData = JSON.stringify(this);
+              localStorage.setItem("recipeList", serializedData);
+              console.log("Data saved to localStorage:", serializedData);
+          }
+
+          // Deserialize the RecipeList from localStorage
+          static loadFromLocalStorage() {
+              const serializedData = localStorage.getItem("recipeList");
+              if (serializedData) {
+                  const parsedData = JSON.parse(serializedData);
+                  const recipeList = new RecipeList();
+
+                  // Rebuild the RecipeList object with class instances
+                  parsedData.recipes.forEach(recipeData => {
+                      const recipe = new Recipe(recipeData.name);
+                      recipeData.ingredients.forEach(ingredientData => {
+                          recipe.addIngredient(ingredientData.name, ingredientData.qty);
+                      });
+                      recipeList.addRecipe(recipe);
+                  });
+
+                  console.log("Data loaded from localStorage:", recipeList);
+                  return recipeList;
+              } else {
+                  console.log("No data found in localStorage.");
+                  return null;
+              }
+          }
+
+          //// Display the recipes on the page
+          //displayRecipes(targetElementId) {
+          //    const targetElement = document.getElementById(targetElementId);
+          //    targetElement.innerHTML = ""; // Clear any existing content
+
+          //    if (this.recipes.length === 0) {
+          //        targetElement.innerHTML = "<p>No recipes to display.</p>";
+          //        return;
+          //    }
+
+          //    this.recipes.forEach(recipe => {
+          //        const recipeDiv = document.createElement("div");
+          //        recipeDiv.className = "recipe";
+
+          //        const recipeName = document.createElement("h3");
+          //        recipeName.textContent = recipe.name;
+          //        recipeDiv.appendChild(recipeName);
+
+          //        const ingredientList = document.createElement("ul");
+          //        recipe.ingredients.forEach(ingredient => {
+          //            const ingredientItem = document.createElement("li");
+          //            ingredientItem.textContent = `${ingredient.name}: ${ingredient.qty}`;
+          //            ingredientList.appendChild(ingredientItem);
+          //        });
+
+          //        recipeDiv.appendChild(ingredientList);
+          //        targetElement.appendChild(recipeDiv);
+          //    });
+          //}
+
+          displayRecipes(targetElementId) {
+              const targetElement = document.getElementById(targetElementId);
+              targetElement.innerHTML = ""; // Clear any existing content
+
+              if (this.recipes.length === 0) {
+                  targetElement.innerHTML = "<p>No recipes to display.</p>";
+                  return;
+              }
+
+              this.recipes.forEach((recipe, index) => {
+                  const recipeDiv = document.createElement("div");
+                  recipeDiv.className = "recipe";
+
+                  // Create the button for the recipe name
+                  const recipeButton = document.createElement("button");
+                  recipeButton.textContent = recipe.name;
+
+                  // Add the event listener to load the recipe when clicked
+                  recipeButton.addEventListener("click", () => this.loadRecipe(recipe));
+
+                  // Create the delete button
+                  const deleteButton = document.createElement("button");
+                  deleteButton.textContent = "Delete";
+                  deleteButton.addEventListener("click", () => this.deleteRecipe(index));
+
+                  // Append the recipe button and delete button to the recipeDiv
+                  recipeDiv.appendChild(recipeButton);
+                  recipeDiv.appendChild(deleteButton);
+
+                  targetElement.appendChild(recipeDiv);
+              });
+          }
+
+          // Load the selected recipe into the page fields for user display
+          loadRecipe(recipe) {
+              // You can define your code here to display the recipe's details
+              // For example, populate text fields with the recipe name and ingredients
+              //document.getElementById("recipeNameField").value = recipe.name;
+              //document.getElementById("ingredientsField").value = recipe.ingredients.map(i => `${i.name}: ${i.qty}`).join(", ");
+
+              var ingredient;
+
+              //ingredient = 
+
+              // reflect the loaded recipe back to the main recipe tab
+              document.getElementById("name").value = recipe.name;
+              
+              //document.getElementById("flour").value = recipe.ingredients[0].name
+              document.getElementById("flour").value = recipe.ingredients.find(x => x.name === "flour").qty;
+              document.getElementById("water").value = recipe.ingredients.find(x => x.name === "water").qty;
+              document.getElementById("salt").value = recipe.ingredients.find(x => x.name === "salt").qty;
+              document.getElementById("sugar").value = recipe.ingredients.find(x => x.name === "sugar").qty;
+              document.getElementById("oil").value = recipe.ingredients.find(x => x.name === "oil").qty;
+              document.getElementById("other").value = recipe.ingredients.find(x => x.name === "other").qty;
+
+          }
+
+          
+
+          // Delete the selected recipe from the local storage (or recipes array)
+          deleteRecipe(recipeIndex) {
+              // Remove the recipe from the array
+              this.recipes.splice(recipeIndex, 1);
+
+              // Update the local storage with the new list
+              localStorage.setItem("recipeList", JSON.stringify(this.recipes));
+
+              // Re-render the recipes list
+              this.displayRecipes('recipeDisplay');
+          }
+
+
+      }
+
+      const recipeList = new RecipeList();
+
+      function AddRecipe() {
+
+          // get the name of the recipe first to use this as the display name on the load page
+          var name = document.getElementById("name").value;
+          const recipe = new Recipe(name);
+          var flour = document.getElementById("flour").value;
+          var water = document.getElementById("water").value;
+          var salt = document.getElementById("salt").value;
+          var sugar = document.getElementById("sugar").value;
+          var oil = document.getElementById("oil").value;
+          var other = document.getElementById("other").value;
+
+          recipe.addIngredient("flour", flour);
+          recipe.addIngredient("water", water);
+          recipe.addIngredient("salt", salt);
+          recipe.addIngredient("sugar", sugar);
+          recipe.addIngredient("oil", oil);
+          recipe.addIngredient("other", other);
+
+          recipeList.addRecipe(recipe);
+          recipeList.saveToLocalStorage();
+      }
+
+      // Event listeners for buttons
+      //document.getElementById("saveButton").addEventListener("click", () => {
+      //    recipeList.saveToLocalStorage();
+      //});
+
+      document.getElementById("loadButton").addEventListener("click", () => {
+          const loadedRecipes = RecipeList.loadFromLocalStorage();
+          if (loadedRecipes) {
+              console.log("Loaded Recipes:", loadedRecipes);
+          }
+      });
+
+      document.getElementById("displayButton").addEventListener("click", () => {
+          const loadedRecipes = RecipeList.loadFromLocalStorage();
+          if (loadedRecipes) {
+              loadedRecipes.displayRecipes("recipeDisplay");
+          } else {
+              document.getElementById("recipeDisplay").innerHTML = "<p>No recipes to display. Please load data first.</p>";
+          }
+      });
+
+
+
+
+
   
   </script>
 </body>
