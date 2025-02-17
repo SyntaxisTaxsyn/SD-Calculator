@@ -268,12 +268,12 @@
 
 
   <script>
-      //if (navigator.serviceWorker) {
-      //  navigator.serviceWorker.register (
-      //    '/SD-Calculator/sw.js',
-      //    {scope: '/SD-Calculator/'}
-      //  )
-      //}
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.register (
+          '/SD-Calculator/sw.js',
+          {scope: '/SD-Calculator/'}
+        )
+      }
   </script>
   <script src="js/app.js"></script>
   <script>
@@ -835,8 +835,27 @@
           recipe.addIngredient("oil", oil);
           recipe.addIngredient("other", other);
 
-          recipeList.addRecipe(recipe);
-          recipeList.saveToLocalStorage();
+          // only add the recipe to the list if the name is not empty, we cant guard against empty ingredients however since this might be intentional
+          if (name != "") {
+              recipeList.displayRecipes("recipeDisplay"); // Hoping that calling this first before saving avoids overwriting the old recipes
+              var exists = false;
+              // Just checking the existing recipes to see if this new one exists
+              recipeList.recipes.forEach(x => {
+                  if (x.name === name) {
+                      exists = true;
+                  }
+              });
+              if (exists == false) {
+                  recipeList.addRecipe(recipe);
+                  
+              } else {
+                  recipeList.recipes.find(x => x.name == name) = recipe; // this should update the existing recipe with the new info
+              }
+              recipeList.saveToLocalStorage();
+              recipeList.displayRecipes("recipeDisplay");
+              
+          }
+          
       }
 
       // Event listeners for buttons
