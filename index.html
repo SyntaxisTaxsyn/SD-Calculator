@@ -1,229 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>GitHub page PWA template</title>
-  <link rel="canonical" href="https://syntaxistaxsyn.github.io/SD-Calculator/" />
-  <link rel="manifest" href="/SD-Calculator/manifest.webmanifest">
-  <link rel="stylesheet" href="css/styles.css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  <style>
-      body {
-          font-family: Arial, sans-serif;
-          margin: 0px;
-      }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>GitHub page PWA template</title>
+    <link rel="canonical" href="https://syntaxistaxsyn.github.io/SD-Calculator/" />
+    <link rel="manifest" href="/SD-Calculator/manifest.webmanifest">
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0px;
+        }
 
-      label {
-          display: block;
-          margin: 10px 0 5px;
-      }
- /*   input {
-      margin: 5px 0;
-      padding: 8px;
-      width: 100px;
-    }*/
-/*    button {
-      padding: 8px 12px;
-      cursor: pointer;
-    }*/
-      button {
-          padding: 10px 15px;
-          margin-top: 10px;
-      }
-      input {
-          padding: 5px;
-          margin-bottom: 10px;
-          width: 200px;
-      }
-      .output {
-          margin-top: 20px;
-          padding: 15px;
-          border: 1px solid #ddd;
-          background-color: #f9f9f9;
-      }
-
-      .switch {
-          position: relative;
-          display: inline-block;
-          width: 60px;
-          height: 34px;
-      }
-
-          .switch input {
-              opacity: 0;
-              width: 0;
-              height: 0;
-          }
-
-      .slider {
-          position: absolute;
-          cursor: pointer;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background-color: #ccc;
-          -webkit-transition: .4s;
-          transition: .4s;
-      }
-
-          .slider:before {
-              position: absolute;
-              content: "";
-              height: 26px;
-              width: 26px;
-              left: 4px;
-              bottom: 4px;
-              background-color: white;
-              -webkit-transition: .4s;
-              transition: .4s;
-          }
-
-      input:checked + .slider {
-          background-color: #2196F3;
-      }
-
-      input:focus + .slider {
-          box-shadow: 0 0 1px #2196F3;
-      }
-
-      input:checked + .slider:before {
-          -webkit-transform: translateX(26px);
-          -ms-transform: translateX(26px);
-          transform: translateX(26px);
-      }
-
-      table.display tr td {
-          padding: 10px;
-          text-align: center;
-      }
-
-      table {
-          border-collapse: collapse;
-          width: 100%;
-          margin-top: 20px;
-      }
-
-      table, th, td {
-          border: 1px solid #ddd;
-      }
-
-      th, td {
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        /*   input {
+          margin: 5px 0;
           padding: 8px;
-          text-align: center;
-      }
+          width: 100px;
+        }*/
+        /*    button {
+          padding: 8px 12px;
+          cursor: pointer;
+        }*/
+        button {
+            padding: 10px 15px;
+            margin-top: 10px;
+        }
 
-      th {
-          background-color: #f4f4f4;
-      }
-  </style>
+        input {
+            padding: 5px;
+            margin-bottom: 10px;
+            width: 200px;
+        }
+
+        .output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        table.display tr td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        /* Bottom app bar */
+        .title-bar {
+            display: flex;
+            justify-content: flex-start;
+            align-items: start;
+            vertical-align: middle;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #333;
+        }
+
+        .status {
+            color: white;
+            margin: 0px 0px 0px 0px;
+            padding: 10px 10px 5px 20px;
+        }
+
+        /* Content area */
+        .content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(240, 240, 240, 0.7); /* Slightly transparent background to allow image to show through */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin: 30px 0px 0px 0px;
+        }
+    </style>
 </head>
 <body>
- 
-   <div class="content">
+
+    <!-- App bar with icons -->
+    <div class="title-bar">
+        <p class="status" id="status">SD Calculator:</p>
+    </div>
+
+    <div class="content">
+        <br />
+        <br />
+        <br />
+        <br />
         <!-- Content for each page, only one will be visible at a time -->
-       <div id="percent" class="page active">
-           <!--Content here is populated by a JS function from another HMTL source file-->
-           <h1>Ingredients By Percentage Calculator</h1>
-           <br>
-           <button type="button" onclick="calculateRecipePercentagesFromWeight()">Calculate Percentages From Weights</button>
-           <table class="display">
+        <div id="percent" class="page active">
+            <!--Content here is populated by a JS function from another HMTL source file-->
+            <h1>Ingredients By Percentage Calculator</h1>
+            <br>
+            <button type="button" onclick="calculateRecipePercentagesFromWeight()">Calculate Percentages From Weights</button>
+            <table class="display">
 
-               <tr><td>Name</td><td><input type="text" id="name" required></td><td></td></tr>
-               <tr><td>Flour</td><td><input type="number" id="flour" required></td><td>g</td></tr>
-               <tr><td>Water</td><td><input type="number" id="water" required></td><td>%</td></tr>
-               <tr><td>Salt</td><td><input type="number" id="salt" required></td><td>%</td></tr>
-               <tr><td>Sugar</td><td><input type="number" id="sugar" required></td><td>%</td></tr>
-               <tr><td>Oil</td><td><input type="number" id="oil" required></td><td>%</td></tr>
-               <tr><td>Other</td><td><input type="number" id="other" required></td><td>%</td></tr>
+                <tr><td>Name</td><td><input type="text" id="name" required></td><td></td></tr>
+                <tr><td>Flour</td><td><input type="number" id="flour" required></td><td>g</td></tr>
+                <tr><td>Water</td><td><input type="number" id="water" required></td><td>%</td></tr>
+                <tr><td>Salt</td><td><input type="number" id="salt" required></td><td>%</td></tr>
+                <tr><td>Sugar</td><td><input type="number" id="sugar" required></td><td>%</td></tr>
+                <tr><td>Oil</td><td><input type="number" id="oil" required></td><td>%</td></tr>
+                <tr><td>Other</td><td><input type="number" id="other" required></td><td>%</td></tr>
 
-           </table>
-           </br>
+            </table>
+            </br>
 
-           <table class="display">
-               <tr>
-                   <td>
-                       Starter Configuration
-                   </td>
-                   <td>
-                       <label class="switch">
-                           <input id="starter-type" type="checkbox" onchange="changeStarterType()" oninput="changeStarterType()">
-                           <span class="slider"></span>
-                       </label>
-                   </td>
-                   <td>
-                       <p id="starter-type-text">Ratio</p>
-                   </td>
-               </tr>
-           </table>
-
-
-           <div id="div-ratio" style="display:block;">
-               <table class="display">
-                   <tr><td>Starter Amount</td><td><input type="number" id="starter" required></td><td>grams</td></tr>
-                   <tr><td>Starter Ratio</td><td><input type="text" id="starterRatio" placeholder="e.g., 1:1" required></td><td>grams</td></tr>
-               </table>
-               <br />
-               <button type="button" onclick="calculateRecipeRatio()">Calculate</button>
-           </div>
-           <div id="div-weight" style="display:none;">
-               <table class="display">
-                   <tr><td>Flour</td><td><input type="number" id="starterWeightFlour" placeholder="0" required></td><td>g</td></tr>
-                   <tr><td>Water</td><td><input type="number" id="starterWeightWater" placeholder="0" required></td><td>g</td></tr>
-               </table>
-               <br />
-               <button type="button" onclick="calculateRecipeWeight()">Calculate</button>
-           </div>
+            <table class="display">
+                <tr>
+                    <td>
+                        Starter Configuration
+                    </td>
+                    <td>
+                        <label class="switch">
+                            <input id="starter-type" type="checkbox" onchange="changeStarterType()" oninput="changeStarterType()">
+                            <span class="slider"></span>
+                        </label>
+                    </td>
+                    <td>
+                        <p id="starter-type-text">Ratio</p>
+                    </td>
+                </tr>
+            </table>
 
 
-           <div class="output" id="output"></div>
-       </div>
-       <div id="weight" class="page">
-           <!--Content here is populated by a JS function from another HMTL source file-->
-           <h1>Ingredients By Weight</h1>
-           <br />
-           <button type="button" onclick="calculateRecipeWeights()">Calculate Weights From Percentages</button>
-           <table class="display">
-               <tr><td>Flour</td><td><input type="number" id="weight-flour" required></td><td>g</td></tr>
-               <tr><td>Water</td><td><input type="number" id="weight-water" required></td><td>g</td></tr>
-               <tr><td>Salt</td><td><input type="number" id="weight-salt" required></td><td>g</td></tr>
-               <tr><td>Sugar</td><td><input type="number" id="weight-sugar" required></td><td>g</td></tr>
-               <tr><td>Oil</td><td><input type="number" id="weight-oil" required></td><td>g</td></tr>
-               <tr><td>Other</td><td><input type="number" id="weight-other" required></td><td>g</td></tr>
+            <div id="div-ratio" style="display:block;">
+                <table class="display">
+                    <tr><td>Starter Amount</td><td><input type="number" id="starter" required></td><td>grams</td></tr>
+                    <tr><td>Starter Ratio</td><td><input type="text" id="starterRatio" placeholder="e.g., 1:1" required></td><td>grams</td></tr>
+                </table>
+                <br />
+                <button type="button" onclick="calculateRecipeRatio()">Calculate</button>
+            </div>
+            <div id="div-weight" style="display:none;">
+                <table class="display">
+                    <tr><td>Flour</td><td><input type="number" id="starterWeightFlour" placeholder="0" required></td><td>g</td></tr>
+                    <tr><td>Water</td><td><input type="number" id="starterWeightWater" placeholder="0" required></td><td>g</td></tr>
+                </table>
+                <br />
+                <button type="button" onclick="calculateRecipeWeight()">Calculate</button>
+            </div>
 
-           </table>
-       </div>
-       <div id="yield" class="page">
-           <h1>Calculate by Yield</h1>
-           <br>
 
-           <table class="display">
+            <div class="output" id="output"></div>
+        </div>
+        <div id="weight" class="page">
+            <!--Content here is populated by a JS function from another HMTL source file-->
+            <h1>Ingredients By Weight</h1>
+            <br />
+            <button type="button" onclick="calculateRecipeWeights()">Calculate Weights From Percentages</button>
+            <table class="display">
+                <tr><td>Flour</td><td><input type="number" id="weight-flour" required></td><td>g</td></tr>
+                <tr><td>Water</td><td><input type="number" id="weight-water" required></td><td>g</td></tr>
+                <tr><td>Salt</td><td><input type="number" id="weight-salt" required></td><td>g</td></tr>
+                <tr><td>Sugar</td><td><input type="number" id="weight-sugar" required></td><td>g</td></tr>
+                <tr><td>Oil</td><td><input type="number" id="weight-oil" required></td><td>g</td></tr>
+                <tr><td>Other</td><td><input type="number" id="weight-other" required></td><td>g</td></tr>
 
-               <tr><td>Output</td><td><input type="number" id="output-required" required></td><td>g</td></tr>
-               <!--<tr><td>Water</td><td><input type="number" id="water" required></td><td>%</td></tr>
-    <tr><td>Salt</td><td><input type="number" id="salt" required></td><td>%</td></tr>
-    <tr><td>Sugar</td><td><input type="number" id="sugar" required></td><td>%</td></tr>
-    <tr><td>Oil</td><td><input type="number" id="oil" required></td><td>%</td></tr>
-    <tr><td>Other</td><td><input type="number" id="other" required></td><td>%</td></tr>-->
+            </table>
+        </div>
+        <div id="yield" class="page">
+            <h1>Calculate by Yield</h1>
+            <br>
 
-           </table>
-           <button type="button" onclick="calculateForYield()">Calculate Amounts</button>
-           <div class="output" id="output-yield"></div>
-       </div>
+            <table class="display">
 
-       <div id="recipe" class="page">
-           <h1>Recipe Save/Load</h1>
-           <br />
-           <button id="saveButton" onclick="AddRecipe()">Save Recipes</button>
-           <button id="loadButton">Load Recipes</button>
-           <button id="displayButton">Display Recipes</button>
+                <tr><td>Output</td><td><input type="number" id="output-required" required></td><td>g</td></tr>
+                <!--<tr><td>Water</td><td><input type="number" id="water" required></td><td>%</td></tr>
+                <tr><td>Salt</td><td><input type="number" id="salt" required></td><td>%</td></tr>
+                <tr><td>Sugar</td><td><input type="number" id="sugar" required></td><td>%</td></tr>
+                <tr><td>Oil</td><td><input type="number" id="oil" required></td><td>%</td></tr>
+                <tr><td>Other</td><td><input type="number" id="other" required></td><td>%</td></tr>-->
 
-           <div id="recipeDisplay">
-               <!-- Recipes will be displayed here -->
-           </div>
+            </table>
+            <button type="button" onclick="calculateForYield()">Calculate Amounts</button>
+            <div class="output" id="output-yield"></div>
+        </div>
 
-       </div>
+        <div id="recipe" class="page">
+            <h1>Recipe Save/Load</h1>
+            <br />
+            <button id="saveButton" onclick="saveRecipe()">Save Recipes</button>
+            <button id="loadButton" onclick="loadRecipes()">Load Recipes</button>
+            <button id="displayButton" onclick="displayRecipes()">Display Recipes</button>
+
+            <div id="recipeDisplay">
+                <!-- Recipes will be displayed here -->
+            </div>
+
+        </div>
         <div id="schedule" class="page">
             <!--Content here is populated by a JS function from another HMTL source file-->
             <h1>Bread Starter Feed Calculator</h1>
@@ -264,20 +307,23 @@
         <a href="javascript:void(0);" onclick="changeContent('schedule')"><i class="fa-regular fa-clock"></i></a>
     </div>
 
-    <p>App Version 202502171754</p>
+    <p>App Version 202502261227</p>
 
 
-  <script>
-      if (navigator.serviceWorker) {
-        navigator.serviceWorker.register (
-          '/SD-Calculator/sw.js',
-          {scope: '/SD-Calculator/'}
-        )
-      }
-  </script>
-  <script src="js/app.js"></script>
-  <script>
-   // Function to switch content based on the selected page
+    <script>
+        if (navigator.serviceWorker) {
+            navigator.serviceWorker.register(
+                '/SD-Calculator/sw.js',
+                { scope: '/SD-Calculator/' }
+            )
+        }
+    </script>
+    <script src="js/app.js"></script>
+    <script>
+
+        const title = "SD Calculator : ";
+
+        // Function to switch content based on the selected page
         function changeContent(pageId) {
             // Hide all pages
             const pages = document.querySelectorAll('.page');
@@ -286,604 +332,584 @@
             // Show the selected page
             const activePage = document.getElementById(pageId);
             activePage.classList.add('active');
-        }
+        };
 
-        async function loadHtmlWithInlineStyles(fileName,targetDiv) {
-      //const filename = document.getElementById("filename").value;
-      const filename = fileName;
+        async function loadHtmlWithInlineStyles(fileName, targetDiv) {
+            //const filename = document.getElementById("filename").value;
+            const filename = fileName;
 
-      if (!filename) {
-        alert("Please enter a file name.");
-        return;
-      }
-
-      try {
-        const response = await fetch(filename);
-        if (!response.ok) {
-          throw new Error(`Error loading file: ${response.statusText}`);
-        }
-
-        const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-
-        // Extract and apply inline <style> tags from the <head>
-        const styles = doc.querySelectorAll("style");
-        styles.forEach(style => {
-          const newStyle = document.createElement("style");
-          newStyle.textContent = style.textContent;
-          document.head.appendChild(newStyle);
-        });
-
-        const scripts = doc.querySelectorAll("script");
-        scripts.forEach(script => {
-            const newScript = document.createElement("script");
-            if(script.src)
-            {
-                newScript.src = script.src;
-            } else {
-                newScript.textContent = script.textContent;
+            if (!filename) {
+                alert("Please enter a file name.");
+                return;
             }
-            document.body.appendChild(newScript);
+
+            try {
+                const response = await fetch(filename);
+                if (!response.ok) {
+                    throw new Error(`Error loading file: ${response.statusText}`);
+                }
+
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, "text/html");
+
+                // Extract and apply inline <style> tags from the <head>
+                const styles = doc.querySelectorAll("style");
+                styles.forEach(style => {
+                    const newStyle = document.createElement("style");
+                    newStyle.textContent = style.textContent;
+                    document.head.appendChild(newStyle);
+                });
+
+                const scripts = doc.querySelectorAll("script");
+                scripts.forEach(script => {
+                    const newScript = document.createElement("script");
+                    if (script.src) {
+                        newScript.src = script.src;
+                    } else {
+                        newScript.textContent = script.textContent;
+                    }
+                    document.body.appendChild(newScript);
+                });
+
+                // Insert the body content into the target div
+                //const contentDiv = document.getElementById("content");
+                const contentDiv = document.getElementById(targetDiv);
+                contentDiv.innerHTML = doc.body.innerHTML;
+
+            } catch (error) {
+                //document.getElementById("content").innerHTML = `<p style="color: red;">${error.message}</p>`;
+                document.getElementById(targetDiv).innerHTML = `<p style="color: red;">${error.message}</p>`;
+            }
+        }
+
+        //loadHtmlWithInlineStyles("starterSchedule.html","schedule");
+        //loadHtmlWithInlineStyles("percentCalculator.html","percent");
+        //loadHtmlWithInlineStyles("weightInput.html", "weight");
+
+        function calculateRecipePercentagesFromWeight() {
+            // This function grabs the weight amounts of the recipe from the weight tab and transposes them into percentages
+
+            // grab the values from the weight tab
+            var flour = document.getElementById("weight-flour").value;
+            var water = document.getElementById("weight-water").value;
+            var salt = document.getElementById("weight-salt").value;
+            var sugar = document.getElementById("weight-sugar").value;
+            var oil = document.getElementById("weight-oil").value;
+            var other = document.getElementById("weight-other").value;
+
+            // Calculate the values of the ingredients as percentage
+            var waterpercent = (water / flour) * 100;
+            var saltpercent = (salt / flour) * 100;
+            var sugarpercent = (sugar / flour) * 100;
+            var oilpercent = (oil / flour) * 100;
+            var otherpercent = (other / flour) * 100;
+
+            // reflect the calculated percentages into the percent tab
+            document.getElementById("flour").value = flour;
+            document.getElementById("water").value = waterpercent.toFixed(2);
+            document.getElementById("salt").value = saltpercent.toFixed(2);
+            document.getElementById("sugar").value = sugarpercent.toFixed(2);
+            document.getElementById("oil").value = oilpercent.toFixed(2);
+            document.getElementById("other").value = otherpercent.toFixed(2);
+
+        }
+
+        function changeStarterType() {
+            var selection = document.getElementById("starter-type").checked;
+            var text;
+            if (selection) {
+                text = "Weight";
+                document.getElementById("div-ratio").style.display = "none";
+                document.getElementById("div-weight").style.display = "block";
+            } else {
+                text = "Ratio";
+                document.getElementById("div-ratio").style.display = "block";
+                document.getElementById("div-weight").style.display = "none";
+            };
+            console.log("text = " + text);
+            document.getElementById("starter-type-text").innerHTML = text;
+        }
+
+        function calculateRecipeRatio() {
+            // Input values
+            const flourInput = parseFloat(document.getElementById("flour").value);
+            const waterPercentage = parseFloat(document.getElementById("water").value) / 100;
+            const saltPercentage = parseFloat(document.getElementById("salt").value) / 100;
+            const sugarPercentage = parseFloat(document.getElementById("sugar").value) / 100;
+            const oilPercentage = parseFloat(document.getElementById("oil").value) / 100;
+            const otherPercentage = parseFloat(document.getElementById("other").value) / 100;
+            const starter = parseFloat(document.getElementById("starter").value);
+            const starterRatio = document.getElementById("starterRatio").value.split(":").map(Number);
+
+            if (starterRatio.length !== 2 || isNaN(starterRatio[0]) || isNaN(starterRatio[1])) {
+                alert("Please enter a valid starter ratio (e.g., 1:1, 2:3).");
+                return;
+            }
+
+            // Calculate starter flour and water
+            const starterFlourRatio = starterRatio[0] / (starterRatio[0] + starterRatio[1]);
+            const starterWaterRatio = starterRatio[1] / (starterRatio[0] + starterRatio[1]);
+            const starterFlour = starter * starterFlourRatio;
+            const starterWater = starter * starterWaterRatio;
+
+            // Calculate amounts
+            const flour = flourInput - starterFlour;
+            const water = (flourInput * waterPercentage) - starterWater;
+            const salt = flourInput * saltPercentage;
+            const sugar = flourInput * sugarPercentage;
+            const oil = flourInput * oilPercentage;
+            const other = flourInput * otherPercentage;
+
+            var total = flour + water + salt + sugar + oil + other + starter;
+
+            // Output results
+            const outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = `
+                    <h2>Recipe Calculation:</h2>
+                    <p><strong>Flour:</strong> ${flour.toFixed(2)} g</p>
+                    <p><strong>Water:</strong> ${water.toFixed(2)} g</p>
+                    <p><strong>Salt:</strong> ${salt.toFixed(2)} g</p>
+                    <p><strong>Sugar:</strong> ${sugar.toFixed(2)} g</p>
+                    <p><strong>Oil:</strong> ${oil.toFixed(2)} g</p>
+                    <p><strong>Other:</strong> ${other.toFixed(2)} g</p>
+                    <p><strong>Starter Flour:</strong> ${starterFlour.toFixed(2)} g</p>
+                    <p><strong>Starter Water:</strong> ${starterWater.toFixed(2)} g</p>
+                    <p><strong>Recipe Total:</strong> ${total.toFixed(2)} g</p>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <p>Calculation Complete</p>
+                  `;
+        }
+
+        function calculateForYield() {
+            // This function takes an input of total output weight required for the whole recope and runs a calculation on that
+            // It will look at the percentage ingredients for the recipe in the percentage tab and work out the gram amounts to make
+            // a certain quantity of the recipe
+
+            const total = parseFloat(document.getElementById("output-required").value);
+
+            const flourPercentage = 100 // Assume 100 percent for the flour // = parseFloat(document.getElementById("flour").value);
+            const waterPercentage = parseFloat(document.getElementById("water").value);
+            const saltPercentage = parseFloat(document.getElementById("salt").value);
+            const sugarPercentage = parseFloat(document.getElementById("sugar").value);
+            const oilPercentage = parseFloat(document.getElementById("oil").value);
+            const otherPercentage = parseFloat(document.getElementById("other").value);
+            //const flourQty = parseFloat(document.getElementById("starterWeightFlour").value);
+            //const waterQty = parseFloat(document.getElementById("starterWeightWater").value);
+            //const starter = flourQty + waterQty;
+
+            var totalPercent = flourPercentage + waterPercentage + saltPercentage + sugarPercentage + oilPercentage + otherPercentage;
+
+            const flourout = total / totalPercent * flourPercentage;
+            const waterout = total / totalPercent * waterPercentage;
+            const saltout = total / totalPercent * saltPercentage;
+            const sugarout = total / totalPercent * sugarPercentage;
+            const oilout = total / totalPercent * oilPercentage;
+            const otherout = total / totalPercent * otherPercentage;
+
+            // Output results
+            const outputDiv = document.getElementById("output-yield");
+            outputDiv.innerHTML = `
+                          <h2>Yield Calculation:</h2>
+                          <p><strong>Flour:</strong> ${flourout.toFixed(2)} g</p>
+                          <p><strong>Water:</strong> ${waterout.toFixed(2)} g</p>
+                          <p><strong>Salt:</strong> ${saltout.toFixed(2)} g</p>
+                          <p><strong>Sugar:</strong> ${sugarout.toFixed(2)} g</p>
+                          <p><strong>Oil:</strong> ${oilout.toFixed(2)} g</p>
+                          <p><strong>Other:</strong> ${otherout.toFixed(2)} g</p>
+                          <br/>
+                          <br/>
+                          <br/>
+                          <br/>
+                          <p>Calculation Complete</p>
+                        `;
+
+
+        }
+
+
+
+        function calculateRecipeWeight() {
+            // Input values
+            const flourInput = parseFloat(document.getElementById("flour").value);
+            const waterPercentage = parseFloat(document.getElementById("water").value) / 100;
+            const saltPercentage = parseFloat(document.getElementById("salt").value) / 100;
+            const sugarPercentage = parseFloat(document.getElementById("sugar").value) / 100;
+            const oilPercentage = parseFloat(document.getElementById("oil").value) / 100;
+            const otherPercentage = parseFloat(document.getElementById("other").value) / 100;
+            const flourQty = parseFloat(document.getElementById("starterWeightFlour").value);
+            const waterQty = parseFloat(document.getElementById("starterWeightWater").value);
+            const starter = flourQty + waterQty;
+
+            if (!starter > 0 || !waterQty > 0 || !flourQty > 0) {
+                alert("Please enter valid flour/water quantites");
+                return;
+            }
+
+            // Calculate starter flour and water
+            const starterFlour = flourQty;
+            const starterWater = waterQty;
+
+            // Calculate amounts
+            const flour = flourInput - starterFlour;
+            const water = (flourInput * waterPercentage) - starterWater;
+            const salt = flourInput * saltPercentage;
+            const sugar = flourInput * sugarPercentage;
+            const oil = flourInput * oilPercentage;
+            const other = flourInput * otherPercentage;
+
+            var total = flour + water + salt + sugar + oil + other + starterFlour + starterWater;
+
+
+            // Output results
+            const outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = `
+                    <h2>Recipe Calculation:</h2>
+                    <p><strong>Flour:</strong> ${flour.toFixed(2)} g</p>
+                    <p><strong>Water:</strong> ${water.toFixed(2)} g</p>
+                    <p><strong>Salt:</strong> ${salt.toFixed(2)} g</p>
+                    <p><strong>Sugar:</strong> ${sugar.toFixed(2)} g</p>
+                    <p><strong>Oil:</strong> ${oil.toFixed(2)} g</p>
+                    <p><strong>Other:</strong> ${other.toFixed(2)} g</p>
+                    <p><strong>Starter Flour:</strong> ${starterFlour.toFixed(2)} g</p>
+                    <p><strong>Starter Water:</strong> ${starterWater.toFixed(2)} g</p>
+                    <p><strong>Recipe Total:</strong> ${total.toFixed(2)} g</p>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <p>Calculation Complete</p>
+                  `;
+        }
+
+        function calculateRecipeWeights() {
+            // This function grabs the percent amounts of the recipe from the percent tab and transposes them into percentages
+
+            // grab the values from the weight tab
+            var flour = document.getElementById("flour").value;
+            var water = document.getElementById("water").value;
+            var salt = document.getElementById("salt").value;
+            var sugar = document.getElementById("sugar").value;
+            var oil = document.getElementById("oil").value;
+            var other = document.getElementById("other").value;
+
+            // Calculate the values of the ingredients as percentage
+            var waterweight = (flour / 100) * water;
+            var saltweight = (flour / 100) * salt;
+            var sugarweight = (flour / 100) * sugar;
+            var oilweight = (flour / 100) * oil;
+            var otherweight = (flour / 100) * other;
+
+            // reflect the calculated percentages into the percent tab
+            document.getElementById("weight-flour").value = flour;
+            document.getElementById("weight-water").value = waterweight.toFixed(2);
+            document.getElementById("weight-salt").value = saltweight.toFixed(2);
+            document.getElementById("weight-sugar").value = sugarweight.toFixed(2);
+            document.getElementById("weight-oil").value = oilweight.toFixed(2);
+            document.getElementById("weight-other").value = otherweight.toFixed(2);
+
+        }
+
+        function calculateFeedSchedule(targetQuantity, numberOfFeeds, hoursPerFeed) {
+            const feedSchedule = [];
+            let currentStarter = targetQuantity / 2;
+            let totalTime = 0;
+
+            // Work backwards from the target quantity to calculate each feed
+            for (let i = numberOfFeeds; i > 0; i--) {
+                const flour = currentStarter / 2; // Flour is half the current starter
+                const water = flour;            // Water is equal to flour
+                const starter = currentStarter
+                const total = starter + flour + water;
+
+                feedSchedule.unshift({
+                    feed: i,
+                    starter: starter,
+                    flour: flour,
+                    water: water,
+                    total: total,
+                    time: totalTime,
+                });
+
+                // For the next step, the starter becomes the current starter
+                currentStarter = starter / 2;
+                totalTime += hoursPerFeed;
+            }
+
+            return feedSchedule;
+        }
+
+        function generateFeedSchedule() {
+
+            const targetQuantity = parseFloat(document.getElementById("targetQuantity").value);
+            const numberOfFeeds = parseInt(document.getElementById("numberOfFeeds").value);
+            const hoursPerFeed = parseInt(document.getElementById("hoursPerFeed").value);
+
+            if (isNaN(targetQuantity) || isNaN(numberOfFeeds) || isNaN(hoursPerFeed) || targetQuantity <= 0 || numberOfFeeds <= 0 || hoursPerFeed <= 0) {
+                alert("Please enter valid positive numbers for all fields.");
+                return;
+            }
+
+            const timeSchedule = calculateSchedule(hoursPerFeed, numberOfFeeds);
+            const feedSchedule = calculateFeedSchedule(targetQuantity, numberOfFeeds, hoursPerFeed);
+            const tableBody = document.getElementById("feedScheduleTable").querySelector("tbody");
+            const TotalTime = hoursPerFeed * numberOfFeeds;
+
+            // Clear any existing rows
+            tableBody.innerHTML = "";
+            let indexCount = 0;
+
+            // Populate the table with the feed schedule
+            feedSchedule.forEach(feed => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                                <td>${feed.feed}</td>
+                                <td>${feed.starter.toFixed(1)}</td>
+                                <td>${feed.flour.toFixed(1)}</td>
+                                <td>${feed.water.toFixed(1)}</td>
+                                <td>${feed.total.toFixed(1)}</td>
+                                <td>${timeSchedule[indexCount].toString()}</td>
+                            `;
+                tableBody.appendChild(row);
+                indexCount += 1;
+            });
+        }
+
+        function calculateSchedule(intervalInHours, numberOfTasks) {
+            // Get the current time (starting point)
+            const now = new Date();
+
+            // Create an array to hold the future timestamps
+            const schedule = [];
+            schedule.push(now.toLocaleString()) // Start by feeding in the time we started at assuming its now
+
+            // Calculate the timestamp for each task
+            for (let i = 1; i <= numberOfTasks; i++) {
+                // Add the interval to the current time for each task
+                const taskTime = new Date(now.getTime() + (intervalInHours * i * 60 * 60 * 1000)); // Convert hours to milliseconds
+                schedule.push(taskTime.toLocaleString()); // Add the formatted date string to the schedule
+            }
+
+            return schedule;
+        }
+
+        class Recipe {
+            constructor(name, ingredients = []) {
+                this.name = name;
+                this.ingredients = ingredients; // Array of { name, quantity }
+            }
+
+            static saveToLocalStorage(recipes) {
+                localStorage.setItem("recipes", JSON.stringify(recipes));
+            }
+
+            static loadFromLocalStorage() {
+                const storedRecipes = localStorage.getItem("recipes");
+                return storedRecipes ? JSON.parse(storedRecipes) : [];
+            }
+        }
+
+        // Global recipe list
+        let recipeList = Recipe.loadFromLocalStorage();
+
+        // Save the recipe to local storage
+        function saveRecipe() {
+
+            //loadRecipes(); // To make sure we are up to date with the latest local storage copy
+            var message = "";
+            var flour = document.getElementById("flour").value;
+            var water = document.getElementById("water").value;
+            var salt = document.getElementById("salt").value;
+            var sugar = document.getElementById("sugar").value;
+            var oil = document.getElementById("oil").value;
+            var other = document.getElementById("other").value;
+
+            var name;
+            var quantity;
+
+            const ingredients = [];
+            name = "flour";
+            quantity = flour
+            ingredients.push({ name, quantity });
+
+            name = "water";
+            quantity = water
+            ingredients.push({ name, quantity });
+
+            name = "salt";
+            quantity = salt
+            ingredients.push({ name, quantity });
+
+            name = "sugar";
+            quantity = sugar
+            ingredients.push({ name, quantity });
+
+            name = "oil";
+            quantity = oil
+            ingredients.push({ name, quantity });
+
+            name = "other";
+            quantity = other
+            ingredients.push({ name, quantity });
+
+
+            var name = document.getElementById("name").value;
+            let newRecipe = new Recipe(name, ingredients);
+            var exists = false;
+            var isValid = false;
+
+            // Check if the recipe needs to get saved or updated
+            var foundIndex = 0;
+
+            // Check for existing recipe and note the index
+            for (var i = 0; i < recipeList.length; i++) {
+                if (recipeList[i].name === name) {
+                    foundIndex = i;
+                    exists = true;
+                }
+            }
+
+            // Check if the recipe is valid to save
+            if (name === "") {
+                isValid = false;
+                message = "recipe invalid, not saved";
+            } else {
+                isValid = true;
+            }
+
+            if (exists && isValid) {
+                recipeList[foundIndex] = newRecipe;
+                message = newRecipe.name + " recipe updated";
+            }
+
+            if (!exists && isValid) {
+                recipeList.push(newRecipe);
+                message = newRecipe.name + " recipe saved";
+            }
+
+            // save, reload and display to sync up local storage with current UI
+            Recipe.saveToLocalStorage(recipeList);
+            loadRecipes();
+            displayRecipes();
+
+            updateStatus(message);
+        };
+
+        function updateStatus(status) {
+            document.getElementById("status").innerText = title + status;
+        }
+
+        function loadRecipes() {
+            recipeList = Recipe.loadFromLocalStorage();
+            if (recipeList.length > 0) {
+                updateStatus(recipeList.length.toString() + " recipes loaded");
+            } else {
+                updateStatus("no recipes loaded");
+            }
+        }
+
+        function displayRecipes() {
+
+            const targetElement = document.getElementById("recipeDisplay");
+            targetElement.innerHTML = ""; // Clear any existing content
+
+            if (recipeList.length === 0) {
+                targetElement.innerHTML = "<p>No recipes to display.</p>";
+                return;
+            };
+
+            recipeList.forEach(recipe => {
+                const recipeDiv = document.createElement("div");
+                recipeDiv.className = "recipe";
+
+                // Create the button for the recipe name
+                const recipeButton = document.createElement("button");
+                recipeButton.textContent = recipe.name;
+                //alert(recipe[index].name);
+
+                // Add the event listener to load the recipe when clicked
+                recipeButton.addEventListener("click", () => loadRecipe(recipe.name));
+
+                // Create the delete button
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.addEventListener("click", () => deleteRecipe(recipe.name));
+
+                // Append the recipe button and delete button to the recipeDiv
+                recipeDiv.appendChild(recipeButton);
+                recipeDiv.appendChild(deleteButton);
+
+                targetElement.appendChild(recipeDiv);
+            });
+        };
+
+        // Load the selected recipe into the page fields for user display
+        function loadRecipe(recipeName) {
+
+            var recipe = recipeList.find(x => x.name === recipeName);
+            document.getElementById("name").value = recipe.name;
+            document.getElementById("flour").value = recipe.ingredients.find(x => x.name === "flour").quantity;
+            document.getElementById("water").value = recipe.ingredients.find(x => x.name === "water").quantity;
+            document.getElementById("salt").value = recipe.ingredients.find(x => x.name === "salt").quantity;
+            document.getElementById("sugar").value = recipe.ingredients.find(x => x.name === "sugar").quantity;
+            document.getElementById("oil").value = recipe.ingredients.find(x => x.name === "oil").quantity;
+            document.getElementById("other").value = recipe.ingredients.find(x => x.name === "other").quantity;
+            updateStatus(recipeName + " recipe loaded");
+
+        };
+
+        // Delete the selected recipe from the local storage (or recipes array)
+        function deleteRecipe(recipeName) {
+
+            // Save logic guards against having 2 recipes with the same name so we can safely search the existing recipes
+            // for one with the same name and then note its index before performing the splice operation to delete the record
+
+            var message = "";
+
+            // confirm with the user if they wanted to perform this action
+            if (!window.confirm("Are you sure you want to delete this recipe?")) {
+                message = "recipe delete cancelled by user";
+                updateStatus(message);
+                return;
+            }
+
+            // Find the recipe named in the function call and note its index
+            var foundIndex = 0;
+            var recipeFound = false;
+            for (var i = 0; i < recipeList.length; i++) {
+                if (recipeList[i].name === recipeName) {
+                    foundIndex = i;
+                    recipeFound = true;
+                    break;
+                }
+            }
+
+            // If the recipe was found then delete it at the index
+            if (recipeFound) {
+                recipeList.splice(foundIndex, 1);
+                message = recipeName + " recipe deleted";
+            }
+
+
+            // Save, load and redisplay the recipes to refresh the local storage and user display and persist changes
+            Recipe.saveToLocalStorage(recipeList);
+            loadRecipes();
+            displayRecipes();
+
+            updateStatus(message);
+
+        }
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // This function is here to load the recipe data from local storage only once on page load.
+            loadRecipes();
+            displayRecipes();
         });
 
-        // Insert the body content into the target div
-        //const contentDiv = document.getElementById("content");
-        const contentDiv = document.getElementById(targetDiv);
-        contentDiv.innerHTML = doc.body.innerHTML;
-
-      } catch (error) {
-        //document.getElementById("content").innerHTML = `<p style="color: red;">${error.message}</p>`;
-        document.getElementById(targetDiv).innerHTML = `<p style="color: red;">${error.message}</p>`;
-      }
-    }
-
-    //loadHtmlWithInlineStyles("starterSchedule.html","schedule");
-    //loadHtmlWithInlineStyles("percentCalculator.html","percent");
-    //loadHtmlWithInlineStyles("weightInput.html", "weight");
-
-      function calculateRecipePercentagesFromWeight() {
-          // This function grabs the weight amounts of the recipe from the weight tab and transposes them into percentages
-
-          // grab the values from the weight tab
-          var flour = document.getElementById("weight-flour").value;
-          var water = document.getElementById("weight-water").value;
-          var salt = document.getElementById("weight-salt").value;
-          var sugar = document.getElementById("weight-sugar").value;
-          var oil = document.getElementById("weight-oil").value;
-          var other = document.getElementById("weight-other").value;
-
-          // Calculate the values of the ingredients as percentage
-          var waterpercent = (water / flour) * 100;
-          var saltpercent = (salt / flour) * 100;
-          var sugarpercent = (sugar / flour) * 100;
-          var oilpercent = (oil / flour) * 100;
-          var otherpercent = (other / flour) * 100;
-
-          // reflect the calculated percentages into the percent tab
-          document.getElementById("flour").value = flour;
-          document.getElementById("water").value = waterpercent.toFixed(2);
-          document.getElementById("salt").value = saltpercent.toFixed(2);
-          document.getElementById("sugar").value = sugarpercent.toFixed(2);
-          document.getElementById("oil").value = oilpercent.toFixed(2);
-          document.getElementById("other").value = otherpercent.toFixed(2);
-
-      }
-
-      function changeStarterType() {
-          var selection = document.getElementById("starter-type").checked;
-          var text;
-          if (selection) {
-              text = "Weight";
-              document.getElementById("div-ratio").style.display = "none";
-              document.getElementById("div-weight").style.display = "block";
-          } else {
-              text = "Ratio";
-              document.getElementById("div-ratio").style.display = "block";
-              document.getElementById("div-weight").style.display = "none";
-          };
-          console.log("text = " + text);
-          document.getElementById("starter-type-text").innerHTML = text;
-      }
-
-      function calculateRecipeRatio() {
-          // Input values
-          const flourInput = parseFloat(document.getElementById("flour").value);
-          const waterPercentage = parseFloat(document.getElementById("water").value) / 100;
-          const saltPercentage = parseFloat(document.getElementById("salt").value) / 100;
-          const sugarPercentage = parseFloat(document.getElementById("sugar").value) / 100;
-          const oilPercentage = parseFloat(document.getElementById("oil").value) / 100;
-          const otherPercentage = parseFloat(document.getElementById("other").value) / 100;
-          const starter = parseFloat(document.getElementById("starter").value);
-          const starterRatio = document.getElementById("starterRatio").value.split(":").map(Number);
-
-          if (starterRatio.length !== 2 || isNaN(starterRatio[0]) || isNaN(starterRatio[1])) {
-              alert("Please enter a valid starter ratio (e.g., 1:1, 2:3).");
-              return;
-          }
-
-          // Calculate starter flour and water
-          const starterFlourRatio = starterRatio[0] / (starterRatio[0] + starterRatio[1]);
-          const starterWaterRatio = starterRatio[1] / (starterRatio[0] + starterRatio[1]);
-          const starterFlour = starter * starterFlourRatio;
-          const starterWater = starter * starterWaterRatio;
-
-          // Calculate amounts
-          const flour = flourInput - starterFlour;
-          const water = (flourInput * waterPercentage) - starterWater;
-          const salt = flourInput * saltPercentage;
-          const sugar = flourInput * sugarPercentage;
-          const oil = flourInput * oilPercentage;
-          const other = flourInput * otherPercentage;
-
-          var total = flour + water + salt + sugar + oil + other + starter;
-
-          // Output results
-          const outputDiv = document.getElementById("output");
-          outputDiv.innerHTML = `
-    <h2>Recipe Calculation:</h2>
-    <p><strong>Flour:</strong> ${flour.toFixed(2)} g</p>
-    <p><strong>Water:</strong> ${water.toFixed(2)} g</p>
-    <p><strong>Salt:</strong> ${salt.toFixed(2)} g</p>
-    <p><strong>Sugar:</strong> ${sugar.toFixed(2)} g</p>
-    <p><strong>Oil:</strong> ${oil.toFixed(2)} g</p>
-    <p><strong>Other:</strong> ${other.toFixed(2)} g</p>
-    <p><strong>Starter Flour:</strong> ${starterFlour.toFixed(2)} g</p>
-    <p><strong>Starter Water:</strong> ${starterWater.toFixed(2)} g</p>
-    <p><strong>Recipe Total:</strong> ${total.toFixed(2)} g</p>
-  `;
-      }
-
-      function calculateForYield() {
-          // This function takes an input of total output weight required for the whole recope and runs a calculation on that
-          // It will look at the percentage ingredients for the recipe in the percentage tab and work out the gram amounts to make
-          // a certain quantity of the recipe
-
-          const total = parseFloat(document.getElementById("output-required").value);
-
-          const flourPercentage = 100 // Assume 100 percent for the flour // = parseFloat(document.getElementById("flour").value);
-          const waterPercentage = parseFloat(document.getElementById("water").value);
-          const saltPercentage = parseFloat(document.getElementById("salt").value);
-          const sugarPercentage = parseFloat(document.getElementById("sugar").value);
-          const oilPercentage = parseFloat(document.getElementById("oil").value);
-          const otherPercentage = parseFloat(document.getElementById("other").value);
-          //const flourQty = parseFloat(document.getElementById("starterWeightFlour").value);
-          //const waterQty = parseFloat(document.getElementById("starterWeightWater").value);
-          //const starter = flourQty + waterQty;
-
-          var totalPercent = flourPercentage + waterPercentage + saltPercentage + sugarPercentage + oilPercentage + otherPercentage;
-
-          const flourout = total / totalPercent * flourPercentage;
-          const waterout = total / totalPercent * waterPercentage;
-          const saltout = total / totalPercent * saltPercentage;
-          const sugarout = total / totalPercent * sugarPercentage;
-          const oilout = total / totalPercent * oilPercentage;
-          const otherout = total / totalPercent * otherPercentage;
-
-          // Output results
-          const outputDiv = document.getElementById("output-yield");
-          outputDiv.innerHTML = `
-          <h2>Yield Calculation:</h2>
-          <p><strong>Flour:</strong> ${flourout.toFixed(2)} g</p>
-          <p><strong>Water:</strong> ${waterout.toFixed(2)} g</p>
-          <p><strong>Salt:</strong> ${saltout.toFixed(2)} g</p>
-          <p><strong>Sugar:</strong> ${sugarout.toFixed(2)} g</p>
-          <p><strong>Oil:</strong> ${oilout.toFixed(2)} g</p>
-          <p><strong>Other:</strong> ${otherout.toFixed(2)} g</p>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <p>Calculation Complete</p>
-        `;
-
-
-      }
-
-
-
-      function calculateRecipeWeight() {
-          // Input values
-          const flourInput = parseFloat(document.getElementById("flour").value);
-          const waterPercentage = parseFloat(document.getElementById("water").value) / 100;
-          const saltPercentage = parseFloat(document.getElementById("salt").value) / 100;
-          const sugarPercentage = parseFloat(document.getElementById("sugar").value) / 100;
-          const oilPercentage = parseFloat(document.getElementById("oil").value) / 100;
-          const otherPercentage = parseFloat(document.getElementById("other").value) / 100;
-          const flourQty = parseFloat(document.getElementById("starterWeightFlour").value);
-          const waterQty = parseFloat(document.getElementById("starterWeightWater").value);
-          const starter = flourQty + waterQty;
-
-          if (!starter > 0 || !waterQty > 0 || !flourQty > 0) {
-              alert("Please enter valid flour/water quantites");
-              return;
-          }
-
-          // Calculate starter flour and water
-          const starterFlour = flourQty;
-          const starterWater = waterQty;
-
-          // Calculate amounts
-          const flour = flourInput - starterFlour;
-          const water = (flourInput * waterPercentage) - starterWater;
-          const salt = flourInput * saltPercentage;
-          const sugar = flourInput * sugarPercentage;
-          const oil = flourInput * oilPercentage;
-          const other = flourInput * otherPercentage;
-
-          var total = flour + water + salt + sugar + oil + other + starterFlour + starterWater;
-
-
-          // Output results
-          const outputDiv = document.getElementById("output");
-          outputDiv.innerHTML = `
-    <h2>Recipe Calculation:</h2>
-    <p><strong>Flour:</strong> ${flour.toFixed(2)} g</p>
-    <p><strong>Water:</strong> ${water.toFixed(2)} g</p>
-    <p><strong>Salt:</strong> ${salt.toFixed(2)} g</p>
-    <p><strong>Sugar:</strong> ${sugar.toFixed(2)} g</p>
-    <p><strong>Oil:</strong> ${oil.toFixed(2)} g</p>
-    <p><strong>Other:</strong> ${other.toFixed(2)} g</p>
-    <p><strong>Starter Flour:</strong> ${starterFlour.toFixed(2)} g</p>
-    <p><strong>Starter Water:</strong> ${starterWater.toFixed(2)} g</p>
-    <p><strong>Recipe Total:</strong> ${total.toFixed(2)} g</p>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <p>Calculation Complete</p>
-  `;
-      }
-
-      function calculateRecipeWeights() {
-          // This function grabs the percent amounts of the recipe from the percent tab and transposes them into percentages
-
-          // grab the values from the weight tab
-          var flour = document.getElementById("flour").value;
-          var water = document.getElementById("water").value;
-          var salt = document.getElementById("salt").value;
-          var sugar = document.getElementById("sugar").value;
-          var oil = document.getElementById("oil").value;
-          var other = document.getElementById("other").value;
-
-          // Calculate the values of the ingredients as percentage
-          var waterweight = (flour / 100) * water;
-          var saltweight = (flour / 100) * salt;
-          var sugarweight = (flour / 100) * sugar;
-          var oilweight = (flour / 100) * oil;
-          var otherweight = (flour / 100) * other;
-
-          // reflect the calculated percentages into the percent tab
-          document.getElementById("weight-flour").value = flour;
-          document.getElementById("weight-water").value = waterweight.toFixed(2);
-          document.getElementById("weight-salt").value = saltweight.toFixed(2);
-          document.getElementById("weight-sugar").value = sugarweight.toFixed(2);
-          document.getElementById("weight-oil").value = oilweight.toFixed(2);
-          document.getElementById("weight-other").value = otherweight.toFixed(2);
-
-      }
-
-      function calculateFeedSchedule(targetQuantity, numberOfFeeds, hoursPerFeed) {
-          const feedSchedule = [];
-          let currentStarter = targetQuantity / 2;
-          let totalTime = 0;
-
-          // Work backwards from the target quantity to calculate each feed
-          for (let i = numberOfFeeds; i > 0; i--) {
-              const flour = currentStarter / 2; // Flour is half the current starter
-              const water = flour;            // Water is equal to flour
-              const starter = currentStarter
-              const total = starter + flour + water;
-
-              feedSchedule.unshift({
-                  feed: i,
-                  starter: starter,
-                  flour: flour,
-                  water: water,
-                  total: total,
-                  time: totalTime,
-              });
-
-              // For the next step, the starter becomes the current starter
-              currentStarter = starter / 2;
-              totalTime += hoursPerFeed;
-          }
-
-          return feedSchedule;
-      }
-
-      function generateFeedSchedule() {
-
-          const targetQuantity = parseFloat(document.getElementById("targetQuantity").value);
-          const numberOfFeeds = parseInt(document.getElementById("numberOfFeeds").value);
-          const hoursPerFeed = parseInt(document.getElementById("hoursPerFeed").value);
-
-          if (isNaN(targetQuantity) || isNaN(numberOfFeeds) || isNaN(hoursPerFeed) || targetQuantity <= 0 || numberOfFeeds <= 0 || hoursPerFeed <= 0) {
-              alert("Please enter valid positive numbers for all fields.");
-              return;
-          }
-
-          const timeSchedule = calculateSchedule(hoursPerFeed, numberOfFeeds);
-          const feedSchedule = calculateFeedSchedule(targetQuantity, numberOfFeeds, hoursPerFeed);
-          const tableBody = document.getElementById("feedScheduleTable").querySelector("tbody");
-          const TotalTime = hoursPerFeed * numberOfFeeds;
-
-          // Clear any existing rows
-          tableBody.innerHTML = "";
-          let indexCount = 0;
-
-          // Populate the table with the feed schedule
-          feedSchedule.forEach(feed => {
-              const row = document.createElement("tr");
-              row.innerHTML = `
-                <td>${feed.feed}</td>
-                <td>${feed.starter.toFixed(1)}</td>
-                <td>${feed.flour.toFixed(1)}</td>
-                <td>${feed.water.toFixed(1)}</td>
-                <td>${feed.total.toFixed(1)}</td>
-                <td>${timeSchedule[indexCount].toString()}</td>
-            `;
-              tableBody.appendChild(row);
-              indexCount += 1;
-          });
-      }
-
-      function calculateSchedule(intervalInHours, numberOfTasks) {
-          // Get the current time (starting point)
-          const now = new Date();
-
-          // Create an array to hold the future timestamps
-          const schedule = [];
-          schedule.push(now.toLocaleString()) // Start by feeding in the time we started at assuming its now
-
-          // Calculate the timestamp for each task
-          for (let i = 1; i <= numberOfTasks; i++) {
-              // Add the interval to the current time for each task
-              const taskTime = new Date(now.getTime() + (intervalInHours * i * 60 * 60 * 1000)); // Convert hours to milliseconds
-              schedule.push(taskTime.toLocaleString()); // Add the formatted date string to the schedule
-          }
-
-          return schedule;
-      }
-
-      class Ingredient {
-          constructor(name, qty) {
-              this.name = name;
-              this.qty = qty;
-          }
-
-      }
-
-      class Recipe {
-          constructor(name) {
-              this.name = name;
-              this.ingredients = [];
-          }
-
-          addIngredient(name, qty) {
-              this.ingredients.push(new Ingredient(name, qty));
-          }
-      }
-
-      // Define the RecipeList class
-      class RecipeList {
-          constructor() {
-              this.recipes = [];
-          }
-
-          addRecipe(recipe) {
-              this.recipes.push(recipe);
-          }
-
-          // Serialize the RecipeList to localStorage
-          saveToLocalStorage() {
-
-              
-
-
-              const serializedData = JSON.stringify(this);
-              localStorage.setItem("recipeList", serializedData);
-              console.log("Data saved to localStorage:", serializedData);
-          }
-
-          // Deserialize the RecipeList from localStorage
-          static loadFromLocalStorage() {
-              const serializedData = localStorage.getItem("recipeList");
-              if (serializedData) {
-                  const parsedData = JSON.parse(serializedData);
-                  const recipeList = new RecipeList();
-
-                  // Rebuild the RecipeList object with class instances
-                  parsedData.recipes.forEach(recipeData => {
-                      const recipe = new Recipe(recipeData.name);
-                      recipeData.ingredients.forEach(ingredientData => {
-                          recipe.addIngredient(ingredientData.name, ingredientData.qty);
-                      });
-                      recipeList.addRecipe(recipe);
-                  });
-
-                  console.log("Data loaded from localStorage:", recipeList);
-                  return recipeList;
-              } else {
-                  console.log("No data found in localStorage.");
-                  return null;
-              }
-          }
-
-          //// Display the recipes on the page
-          //displayRecipes(targetElementId) {
-          //    const targetElement = document.getElementById(targetElementId);
-          //    targetElement.innerHTML = ""; // Clear any existing content
-
-          //    if (this.recipes.length === 0) {
-          //        targetElement.innerHTML = "<p>No recipes to display.</p>";
-          //        return;
-          //    }
-
-          //    this.recipes.forEach(recipe => {
-          //        const recipeDiv = document.createElement("div");
-          //        recipeDiv.className = "recipe";
-
-          //        const recipeName = document.createElement("h3");
-          //        recipeName.textContent = recipe.name;
-          //        recipeDiv.appendChild(recipeName);
-
-          //        const ingredientList = document.createElement("ul");
-          //        recipe.ingredients.forEach(ingredient => {
-          //            const ingredientItem = document.createElement("li");
-          //            ingredientItem.textContent = `${ingredient.name}: ${ingredient.qty}`;
-          //            ingredientList.appendChild(ingredientItem);
-          //        });
-
-          //        recipeDiv.appendChild(ingredientList);
-          //        targetElement.appendChild(recipeDiv);
-          //    });
-          //}
-
-          displayRecipes(targetElementId) {
-              const targetElement = document.getElementById(targetElementId);
-              targetElement.innerHTML = ""; // Clear any existing content
-
-              if (this.recipes.length === 0) {
-                  targetElement.innerHTML = "<p>No recipes to display.</p>";
-                  return;
-              }
-
-              this.recipes.forEach((recipe, index) => {
-                  const recipeDiv = document.createElement("div");
-                  recipeDiv.className = "recipe";
-
-                  // Create the button for the recipe name
-                  const recipeButton = document.createElement("button");
-                  recipeButton.textContent = recipe.name;
-
-                  // Add the event listener to load the recipe when clicked
-                  recipeButton.addEventListener("click", () => this.loadRecipe(recipe));
-
-                  // Create the delete button
-                  const deleteButton = document.createElement("button");
-                  deleteButton.textContent = "Delete";
-                  deleteButton.addEventListener("click", () => this.deleteRecipe(index));
-
-                  // Append the recipe button and delete button to the recipeDiv
-                  recipeDiv.appendChild(recipeButton);
-                  recipeDiv.appendChild(deleteButton);
-
-                  targetElement.appendChild(recipeDiv);
-              });
-          }
-
-          // Load the selected recipe into the page fields for user display
-          loadRecipe(recipe) {
-              // You can define your code here to display the recipe's details
-              // For example, populate text fields with the recipe name and ingredients
-              //document.getElementById("recipeNameField").value = recipe.name;
-              //document.getElementById("ingredientsField").value = recipe.ingredients.map(i => `${i.name}: ${i.qty}`).join(", ");
-
-              var ingredient;
-
-              //ingredient = 
-
-              // reflect the loaded recipe back to the main recipe tab
-              document.getElementById("name").value = recipe.name;
-              
-              //document.getElementById("flour").value = recipe.ingredients[0].name
-              document.getElementById("flour").value = recipe.ingredients.find(x => x.name === "flour").qty;
-              document.getElementById("water").value = recipe.ingredients.find(x => x.name === "water").qty;
-              document.getElementById("salt").value = recipe.ingredients.find(x => x.name === "salt").qty;
-              document.getElementById("sugar").value = recipe.ingredients.find(x => x.name === "sugar").qty;
-              document.getElementById("oil").value = recipe.ingredients.find(x => x.name === "oil").qty;
-              document.getElementById("other").value = recipe.ingredients.find(x => x.name === "other").qty;
-
-          }
-
-          
-
-          // Delete the selected recipe from the local storage (or recipes array)
-          deleteRecipe(recipeIndex) {
-              // Remove the recipe from the array
-              this.recipes.splice(recipeIndex, 1);
-
-              // Update the local storage with the new list
-              localStorage.setItem("recipeList", JSON.stringify(this.recipes));
-
-              // Re-render the recipes list
-              this.displayRecipes('recipeDisplay');
-          }
-
-
-      }
-
-      const recipeList = new RecipeList();
-
-      function AddRecipe() {
-
-          // get the name of the recipe first to use this as the display name on the load page
-          var name = document.getElementById("name").value;
-          const recipe = new Recipe(name);
-          var flour = document.getElementById("flour").value;
-          var water = document.getElementById("water").value;
-          var salt = document.getElementById("salt").value;
-          var sugar = document.getElementById("sugar").value;
-          var oil = document.getElementById("oil").value;
-          var other = document.getElementById("other").value;
-
-          recipe.addIngredient("flour", flour);
-          recipe.addIngredient("water", water);
-          recipe.addIngredient("salt", salt);
-          recipe.addIngredient("sugar", sugar);
-          recipe.addIngredient("oil", oil);
-          recipe.addIngredient("other", other);
-
-          // only add the recipe to the list if the name is not empty, we cant guard against empty ingredients however since this might be intentional
-          if (name != "") {
-              recipeList.displayRecipes("recipeDisplay"); // Hoping that calling this first before saving avoids overwriting the old recipes
-              var exists = false;
-              // Just checking the existing recipes to see if this new one exists
-              recipeList.recipes.forEach(x => {
-                  if (x.name === name) {
-                      exists = true;
-                  }
-              });
-              if (exists == false) {
-                  recipeList.addRecipe(recipe);
-                  
-              } else {
-                  recipeList.recipes.find(x => x.name == name) = recipe; // this should update the existing recipe with the new info
-              }
-              recipeList.saveToLocalStorage();
-              recipeList.displayRecipes("recipeDisplay");
-              
-          }
-          
-      }
-
-      // Event listeners for buttons
-      //document.getElementById("saveButton").addEventListener("click", () => {
-      //    recipeList.saveToLocalStorage();
-      //});
-
-      document.getElementById("loadButton").addEventListener("click", () => {
-          const loadedRecipes = RecipeList.loadFromLocalStorage();
-          if (loadedRecipes) {
-              console.log("Loaded Recipes:", loadedRecipes);
-          }
-      });
-
-      document.getElementById("displayButton").addEventListener("click", () => {
-          const loadedRecipes = RecipeList.loadFromLocalStorage();
-          if (loadedRecipes) {
-              loadedRecipes.displayRecipes("recipeDisplay");
-          } else {
-              document.getElementById("recipeDisplay").innerHTML = "<p>No recipes to display. Please load data first.</p>";
-          }
-      });
-
-
-
-
-
-  
-  </script>
+    </script>
 </body>
 </html>
